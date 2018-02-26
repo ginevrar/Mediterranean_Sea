@@ -36,28 +36,31 @@ ggmap(mappa__) + geom_point(data = POM_med, alpha=.3,aes(x = Longitude, y = Lati
 
 
 mappa1 <- get_map(location = c(0,42, 10,46),maptype =c('watercolor'))
-mappa2 <- get_map(location = c(4.5,42.8, 14,45),maptype =c('watercolor'))
-mappa1 <- get_map(location = c(0,42, 10,46),maptype =c('watercolor'))
-mappa1 <- get_map(location = c(0,42, 10,46),maptype =c('watercolor'))
+mappa2 <- get_map(location = c(4.5,42, 15,46),maptype =c('watercolor'))
+mappa3 <- get_map(location = c(7,42.8, 9,45),maptype =c('watercolor'))
+mappa4 <- get_map(location = c(3,41, 9,46),maptype =c('watercolor'))
+mappa5 <- get_map(location = c(6,42, 15,45),maptype =c('watercolor'))
+mappa6 <- get_map(location = c(7,40, 14,45),maptype =c('watercolor'))
+mappa7 <- get_map(location = c(-4,30, 31,48),maptype =c('watercolor'))
+mappa8 <- get_map(location = c(5,42.8, 9,45),maptype =c('watercolor'))
+mappa5b <- get_map(location = c(6,42, 15,47),maptype =c('watercolor'))
 
 dev.new()
-  ggmap(mappa2) + 
-  geom_point(data = mar, alpha=.06,
+ggmap(mappa3) + 
+  geom_point(data = POM_med, alpha=.06,
              aes(x = Longitude, y = Latitude, size = POC, color=factor(Year)))+
-  geom_point(data = mar, shape=1,alpha=1,
+  geom_point(data = POM_med, shape=1,alpha=1,
              aes(x = Longitude, y = Latitude, size = POC, color=factor(Year)))+
   labs(size = 'POC (umol)') +
   labs(color = "Sampling year")+
   labs(x = NULL, y = NULL) + 
-  labs(title = "POC in the Mediterranean Sea - March", 
-       subtitle = "Cruise: MOOGLI, Medar, Keycop  \n source:https://www.nature.com/articles/sdata201448") +
+  labs(title = "POC in the Mediterranean Sea - December", 
+       subtitle = "Cruise: Medar \n source:https://www.nature.com/articles/sdata201448") +
   #  scale_colour_brewer(palette="Spectral")+
-  scale_colour_manual(values=c('#660000',"#CC6666","#CC0099","#9999CC",'#5050a0'))+
+  scale_colour_manual(values=c('#660000',"#CC6666","#CC0099","#9999CC"))+
   scale_size_continuous(range = c(.6,18))+         #1997 - 2001
-    theme_minimal()+
-    lims(size = c("5", "25", "50",'100','125'))
+  theme_minimal()
 
-  summary(feb$Dataset)
 
 ##  ,'#66CC00
   
