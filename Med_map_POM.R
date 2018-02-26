@@ -22,7 +22,7 @@ jul<-filter(POM_med, Month==7);aug<-filter(POM_med, Month==8);sep<-filter(POM_me
 oct<-filter(POM_med, Month==10);nov<-filter(POM_med, Month==11);dec<-filter(POM_med, Month==12)
 
 mappa <- get_map(location = c(-7,30, 37,46),maptype =c('watercolor'))
-mappa__ <- get_map(location = c(-7,30, 37,46),color='bw')
+mappa__ <- get_map(location = c(-6,33,28,45), maptype =c('toner'))
 
 #ggmap(mappa)+ 
  # geom_point(aes(x = Longitude, y = Latitude, 
@@ -30,20 +30,32 @@ mappa__ <- get_map(location = c(-7,30, 37,46),color='bw')
              
  #            data = f,color="black",shape=21)
 summary(POM_med$Year)
+png(file = "POC_med_sea_byMonth_oneplot_.png",width = 21, height = 18, units = "cm", res = 800)
+ggmap(mappa__) + geom_point(data = POM_med, alpha=.1,aes(x = Longitude, y = Latitude,
+                                              size = POC, color=factor(Month)))+
+  scale_size_continuous(range = c(.4,15))+
+  theme_minimal()
+dev.off()
+png(file = "leg.png",width = 21, height = 18, units = "cm", res = 800)
+ggmap(mappa__) + geom_point(data = POM_med, alpha=1,aes(x = Longitude, y = Latitude,
+                                                         size = POC, color=factor(Month)))+
+  scale_size_continuous(range = c(3,10))+
+  theme_minimal()
+dev.off()
 
-ggmap(mappa__) + geom_point(data = POM_med, alpha=.3,aes(x = Longitude, y = Latitude,cex=2,
-                                              size = POC, color=factor(Month)))
 
+
+myMap <-  get_map(location=c(-5,34,30,46), source="osm",color='bw')
 
 mappa1 <- get_map(location = c(0,42, 10,46),maptype =c('watercolor'))
-mappa2 <- get_map(location = c(4.5,42, 15,46),maptype =c('watercolor'))
+mappa2 <- get_map(location = c(4,42, 16,46),maptype =c('watercolor'))
 mappa3 <- get_map(location = c(7,42.8, 9,45),maptype =c('watercolor'))
 mappa4 <- get_map(location = c(3,41, 9,46),maptype =c('watercolor'))
 mappa5 <- get_map(location = c(6,42, 15,45),maptype =c('watercolor'))
 mappa6 <- get_map(location = c(7,40, 14,45),maptype =c('watercolor'))
-mappa7 <- get_map(location = c(-4,30, 31,48),maptype =c('watercolor'))
+mappa7 <- get_map(location = c(-5,29, 31,48),maptype =c('watercolor'))
 mappa8 <- get_map(location = c(5,42.8, 9,45),maptype =c('watercolor'))
-mappa5b <- get_map(location = c(6,42, 15,47),maptype =c('watercolor'))
+mappa5b <- get_map(location = c(6,41, 15,46),maptype =c('watercolor'))
 
 dev.new()
 ggmap(mappa3) + 
