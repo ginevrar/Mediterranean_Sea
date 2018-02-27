@@ -1,4 +1,5 @@
 
+
 #mappa1 <- get_map(location = c(0,42, 10,46),maptype =c('watercolor'))
 #mappa2 <- get_map(location = c(4.5,42.8, 14,45),maptype =c('watercolor'))
 #mappa3 <- get_map(location = c(7,42.8, 9,45),maptype =c('watercolor'))
@@ -18,8 +19,10 @@ ggmap(mappa1) +
   theme_minimal()
 dev.off()
 
+mappa2b <- get_map(location = c(4,42.5, 14,46),maptype =c('watercolor'))
+
 tiff(file = "feb.tiff",width = 21, height = 18, units = "cm", res = 800)
-ggmap(mappa2) + 
+ggmap(mappa2b) + 
   geom_point(data = feb, alpha=.06,
              aes(x = Longitude, y = Latitude, size = POC, color=factor(Year)))+
   geom_point(data = feb, shape=1,alpha=1,

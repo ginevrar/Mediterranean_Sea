@@ -1,0 +1,170 @@
+setwd('L:\\il mio Drive\\MedSea')
+POM<-read.csv('POM_data_DRYAD_.csv', sep=';');str(POM)
+str(POM$Latitude)
+POM_med<-POM[(POM$Latitude>29 & POM$Latitude<45 & POM$Longitude>-6 & 
+                POM$Longitude<36),]
+
+
+str(POM_med)
+POM_med$POC_mgL = (POM_med$POC*12.0107)    #12.0107 g mol-1 --> ug/L = mg m-3
+POM_med$C_N_ratio = POM_med$POC/POM_med$PON
+POM_med$C_P_ratio = POM_med$POC/POM_med$POP
+POM_med$N_P_ratio = POM_med$PON/POM_med$POP
+
+
+POM_med$Zone[POM_med$Longitude<=-0.5] <- "Alb"
+POM_med$Zone[POM_med$Longitude>-0.5 & POM_med$Longitude<=5 & POM_med$Latitude<=39.5]<-'Sww'
+POM_med$Zone[POM_med$Longitude>5 & POM_med$Longitude<=9 & POM_med$Latitude<=39.5]<-'Swe'
+POM_med$Zone[POM_med$Longitude>9 & POM_med$Longitude<=16 & POM_med$Latitude<=41.5 & POM_med$Latitude>36.5]<-'Tir'
+POM_med$Zone[POM_med$Latitude>39.5 & POM_med$Longitude<=9]<-'Nw'
+POM_med$Zone[POM_med$Latitude>41.5 & POM_med$Longitude<=13]<-'Nw'
+POM_med$Zone[POM_med$Longitude>12.5 & POM_med$Longitude<=16 & POM_med$Latitude<=38]<-'Ion'
+POM_med$Zone[POM_med$Longitude>16 & POM_med$Longitude<=21.5 & POM_med$Latitude<=40]<-'Ion'
+POM_med$Zone[POM_med$Latitude>42.3 & POM_med$Longitude>12.5]<-'Nad'
+POM_med$Zone[POM_med$Longitude>21.5 & POM_med$Longitude<=23]<-'Lev'
+POM_med$Zone[POM_med$Longitude>23 & POM_med$Longitude<=28 & POM_med$Latitude<=35.2]<-'Lev'
+POM_med$Zone[POM_med$Longitude>28 & POM_med$Latitude<=37.5]<-'Lev'
+POM_med$Zone[POM_med$Longitude>23 & POM_med$Longitude<=28 & POM_med$Latitude>35.2]<-'Aeg'
+
+a<-POM_med[(POM_med$Zone=='Nad'),]
+Alb<-POM_med[(POM_med$Longitude<=-0.5),]
+Sww<-POM_med[(POM_med$Longitude>-0.5 & POM_med$Longitude<=5 & POM_med$Latitude<=39.5),]
+Swe<-POM_med[(POM_med$Longitude>5 & POM_med$Longitude<=9 & POM_med$Latitude<=39.5),]
+Tir<-POM_med[(POM_med$Longitude>9 & POM_med$Longitude<=16 & POM_med$Latitude<=41.5 & POM_med$Latitude>36.5),]
+Nwm_1<-POM_med[(POM_med$Latitude>39.5 & POM_med$Longitude<=9),]
+Nwm_2<-POM_med[(POM_med$Latitude>41.5 & POM_med$Longitude<=13),]
+Nwm<-rbind(Nwm_1,Nwm_2)
+Io1<-POM_med[(POM_med$Longitude>12.5 & POM_med$Longitude<=16 & POM_med$Latitude<=38),]
+Io2<-POM_med[(POM_med$Longitude>16 & POM_med$Longitude<=21.5 & POM_med$Latitude<=40),]
+Ion<-rbind(Io1,Io2)
+Nad<-POM_med[(POM_med$Latitude>42.3 & POM_med$Longitude>12.5),]
+Sad1<-POM_med[(POM_med$Latitude<=42.3 & POM_med$Latitude>42 & POM_med$Longitude>14.8),]
+Sad2<-POM_med[(POM_med$Latitude<=42 & POM_med$Latitude>40 & POM_med$Longitude>16 & POM_med$Longitude<=20),]
+Sad<-rbind(Sad1,Sad2)
+Lev1<-POM_med[(POM_med$Longitude>21.5 & POM_med$Longitude<=23),]
+Lev2<-POM_med[(POM_med$Longitude>23 & POM_med$Longitude<=28 & POM_med$Latitude<=35.2),]
+Lev3<-POM_med[(POM_med$Longitude>28 & POM_med$Latitude<=37.5),]
+Lev<-rbind(Lev1,Lev2,Lev3)
+Aeg<-POM_med[(POM_med$Longitude>23 & POM_med$Longitude<=28 & POM_med$Latitude>35.2),]
+
+library(dplyr)     #confronto due dataset e trovo righe comuni
+inner_join(Sad1,Sad2)
+
+library(lattice)
+xyplot(POM_med$Depth~ POM_med$POC_mgL | POM_med$Zone,type='o',
+       groups=POM_med$Month, ylim = c(1300,-30))
+
+deep<-POM_med[(POM_med$Depth>1000),]
+boxplot(POM_med$C_N_ratio)
+str(Alb)
+
+#value=c('Copin-Montegut','Medar','MOOGLI','PROSOPE')
+split(Nwm, Nwm$Dataset, drop = T) 
+summary(Nwm$Dataset)
+
+
+
+
+#NORTH WEST MED SEA
+Nwm_copin<-Nwm[(Nwm$Dataset=='Copin-Montegut'),]
+Nwm_copin<-Nwm_copin[1:6,]
+Nwm_pros<-Nwm[(Nwm$Dataset=='PROSOPE'),]
+Nwm_meda<-Nwm[(Nwm$Dataset=='Medar'),]
+Nwm_moog<-Nwm[(Nwm$Dataset=='MOOGLI'),]
+
+
+m1<-filter(Nwm_meda, Station ==  2196)
+
+
+p1<-filter(Nwm_pros, Station == 933); p1<-p1[1:10,]
+p2<-filter(Nwm_pros, Station == 934);  p2<-p2[1:10,]
+p3<-filter(Nwm_pros, Station == 935);  p3<-p3[1:10,]
+p4<-filter(Nwm_pros, Station == 936);  p4<-p4[1:10,]
+p5<-filter(Nwm_pros, Station == 937);  p5<-p5[1:10,]
+
+ ### plot PROSOPE NWM
+plot(p1$POC_mgL, p1$Depth, ylim=c(200,0),xlim=c(0,70), col=col_months[9], type='o', pch=1, 
+     main='POC NWM - Cruise PROSOPE; 1999') #set
+par(new=T)
+plot(p2$POC_mgL, p2$Depth, ylim=c(200,0),xlim=c(0,70), col=col_months[9], type='o', pch=2)  #set
+par(new=T)
+plot(p3$POC_mgL, p3$Depth, ylim=c(200,0),xlim=c(0,70), col=col_months[10], type='o', pch=3)  #ott
+par(new=T)
+plot(p4$POC_mgL, p4$Depth, ylim=c(200,0),xlim=c(0,70), col=col_months[10], type='o', pch=4)  #ott
+par(new=T)
+plot(p5$POC_mgL, p5$Depth, ylim=c(200,0),xlim=c(0,70), col=col_months[10], type='o', pch=5)  #ott
+
+legend(30,100,legend=c('29 September 43.41 | 7.86','30 September 43.40 | 7.82',
+                         '02 October      43.35 | 7.8','01 October      43.37 | 7.86',
+                         '03 October      43.43 | 7.72'), 
+         col=c(col_months[9],col_months[9],col_months[10],col_months[10],col_months[10]),
+         pch=c(1,2,3,4,5))
+text(15,.100,'stations 933 -937')
+text(15,10,'min dist coast = 41 km')
+
+plot(Nwm_copin$POC_mgL, Nwm_copin$Depth, ylim=c(100,0), col=col_months[5], type='b', pch=19, 
+     main='POC NWM, May 1975', xlab='mg L')
+text(35,10,'May 42.00 | 4.75')
+col_months<-c("#c15063","#5fb14d","#7362cd","#b6b342","#b966bf",
+               "#d38c30","#688ccd","#cd4e34","#4bb092","#ce5b95","#737e38","#c07f56")
+
+Nwm_copin[1:6,]
+
+split(Nwm, Nwm$Dataset, drop = T) <-value
+names(Nwm$Dataset)
+
+ #### plot lat e lon campioni totali e x sottobacino - controllo
+plot(POM_med$Longitude, POM_med$Latitude, pch=19, col='grey', xlab='',ylab='',
+     cex=1.8, xlim=c(-5,26), ylim=c(30,45))
+par(new=T)
+plot(Alb$Longitude, Alb$Latitude,pch=19, col='#9e0142', xlab='',ylab='',
+     xlim=c(-5,26), ylim=c(30,45))
+par(new=T)
+plot(Sww$Longitude, Sww$Latitude,pch=19, col='#d53e4f', xlab='',ylab='',
+     xlim=c(-5,26), ylim=c(30,45))
+par(new=T)
+plot(Swe$Longitude, Swe$Latitude,pch=19, col='#f46d43', xlab='',ylab='',
+     xlim=c(-5,26), ylim=c(30,45))
+par(new=T)
+plot(Nwm$Longitude, Nwm$Latitude,pch=19, col='#fdae61', xlab='',ylab='',
+     xlim=c(-5,26), ylim=c(30,45))
+par(new=T)
+plot(Tir$Longitude, Tir$Latitude,pch=19, col='#fee08b',xlab='',ylab='',
+     xlim=c(-5,26), ylim=c(30,45))
+par(new=T)
+plot(Ion$Longitude, Ion$Latitude,pch=19, col='#e6f598', xlab='',ylab='',
+     xlim=c(-5,26), ylim=c(30,45))
+par(new=T)
+plot(Sad$Longitude, Sad$Latitude,pch=19, col='#abdda4', xlab='',ylab='',
+     xlim=c(-5,26), ylim=c(30,45))
+par(new=T)
+plot(Nad$Longitude, Nad$Latitude,pch=19, col='#66c2a5', xlab='',ylab='',
+     xlim=c(-5,26), ylim=c(30,45))
+par(new=T)
+plot(Lev$Longitude, Lev$Latitude,pch=19, col='#3288bd', xlab='',ylab='',
+     xlim=c(-5,26), ylim=c(30,45))
+par(new=T)
+plot(Aeg$Longitude, Aeg$Latitude,pch=19, col='#5e4fa2', xlab='Longitude',ylab='Latitude',
+     xlim=c(-5,26), ylim=c(30,45))
+#abline(v=5, col='grey', lty=2)
+#abline(h=39.5, col='grey', lty=2)
+legend(-5,45,col=c('#9e0142','#d53e4f','#f46d43','#fdae61','#fee08b',
+      '#e6f598','#66c2a5','#3288bd','#5e4fa2'),  pch=19,legend=c('Alb','Sww','Swe','Nwm','Tir',
+                                                                  'Ion','Nad','Lev', 'Aeg'))
+
+
+
+
+
+C_N_ratio<-POM_med$C_N_ratio
+  
+C_N<-C_N[complete.cases(C_N_ratio)]
+d<-density(C_N)
+plot(d)
+
+
+plot(POM_med$Longitude,POM_med$C_N_ratio)
+
+jitter(POM_med$Longitude, POM_med$Latitude)
+#text(POM_med$Longitude, POM_med$Latitude-.1,POM_med$C_N_ratio,pos=4., col='red')
+max(POM_med$C_N_ratio, na.rm=T)
