@@ -4,7 +4,6 @@ m25<-filter(Nwm_meda, Station ==  2201) #  9 ago 91    42.13   11.74  !!COSTIERO
 
 
 m22<-filter(Nwm_meda, Station ==  1337) #  23 gen 98  43.05 5.13  !!!! SLOPE circa 25 km da costa ()
-m24<-filter(Nwm_meda, Station ==  2200) #  8 ago 91    41.52   12.11   !! SLOPE 28 km dalla costa ----
 
 m1<-filter(Nwm_meda, Station ==  2196)  #  5 feb 2000  43.15   5.12 !!!! COSTIEROcirca 25 km da costa,
 m2<-filter(Nwm_meda, Station ==  2238) #  SLOPE 14maggio 97 SLOPE!!     43.43     7.252239 [13:24] == a 1:12
