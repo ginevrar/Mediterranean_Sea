@@ -4,13 +4,14 @@ str(POM$Latitude)
 POM_med<-POM[(POM$Latitude>29 & POM$Latitude<45 & POM$Longitude>-6 & 
                 POM$Longitude<36),]
 
+col_months<-c("#c15063","#5fb14d","#7362cd","#b6b342","#b966bf",
+              "#d38c30","#688ccd","#cd4e34","#4bb092","#ce5b95","#737e38","#c07f56")
 
 str(POM_med)
-POM_med$POC_mgL = (POM_med$POC*12.0107)    #12.0107 g mol-1 --> ug/L = mg m-3
+POM_med$POC_ugL = (POM_med$POC*12.0107)    #12.0107 g mol-1 --> ug/L = mg m-3
 POM_med$C_N_ratio = POM_med$POC/POM_med$PON
 POM_med$C_P_ratio = POM_med$POC/POM_med$POP
 POM_med$N_P_ratio = POM_med$PON/POM_med$POP
-
 
 POM_med$Zone[POM_med$Longitude<=-0.5] <- "Alb"
 POM_med$Zone[POM_med$Longitude>-0.5 & POM_med$Longitude<=5 & POM_med$Latitude<=39.5]<-'Sww'
@@ -51,7 +52,7 @@ library(dplyr)     #confronto due dataset e trovo righe comuni
 inner_join(Sad1,Sad2)
 
 library(lattice)
-xyplot(POM_med$Depth~ POM_med$POC_mgL | POM_med$Zone,type='o',
+xyplot(POM_med$Depth~ POM_med$POC_ugL | POM_med$Zone,type='o',
        groups=POM_med$Month, ylim = c(1300,-30))
 
 deep<-POM_med[(POM_med$Depth>1000),]
@@ -62,19 +63,87 @@ str(Alb)
 split(Nwm, Nwm$Dataset, drop = T) 
 summary(Nwm$Dataset)
 
-
-
-
 #NORTH WEST MED SEA
 Nwm_copin<-Nwm[(Nwm$Dataset=='Copin-Montegut'),]
 Nwm_copin<-Nwm_copin[1:6,]
 Nwm_pros<-Nwm[(Nwm$Dataset=='PROSOPE'),]
 Nwm_meda<-Nwm[(Nwm$Dataset=='Medar'),]
-Nwm_moog<-Nwm[(Nwm$Dataset=='MOOGLI'),]
+Nwm_moog<-Nwm[(Nwm$Dataset=='MOOGLI'),] #stessi dati di MEDAR (?) moo4 = m10; moo1 = m7
+
+summary(factor(Nwm_moog$Station))
+
+moo1<-filter(Nwm_moog, Station ==  1328) #   SLOPE ----
+moo2<-filter(Nwm_moog, Station ==  1329) #   SLOPE ----
+moo3<-filter(Nwm_moog, Station ==  1330) #   SLOPE ----
+moo4<-filter(Nwm_moog, Station ==  1331) #   COSTA ----
+moo5<-filter(Nwm_moog, Station ==  1332) #   osta ----
+moo6<-filter(Nwm_moog, Station ==  1333) #   osta ----
+moo7<-filter(Nwm_moog, Station ==  1334) #   osta ----
+moo8<-filter(Nwm_moog, Station ==  1335) #   osta ----
+moo9<-filter(Nwm_moog, Station ==  1336) #   osta ----
+moo10<-filter(Nwm_moog, Station ==  1337) #   osta ----
+moo11<-filter(Nwm_moog, Station ==  1338) #   osta ----
 
 
-m1<-filter(Nwm_meda, Station ==  2196)
+m26<-filter(Nwm_meda, Station ==  2202) #   osta ----
+m27<-filter(Nwm_meda, Station ==  2203) #    km dalla costa ----
+m28<-filter(Nwm_meda, Station ==  2204) #    km dalla costa ----
+m29<-filter(Nwm_meda, Station ==  2205) #    km dalla costa ----
+m30<-filter(Nwm_meda, Station ==  2206) #    km dalla costa ----
+m31<-filter(Nwm_meda, Station ==  2207) #    km dalla costa ----
+m32<-filter(Nwm_meda, Station ==  2208) #    km dalla costa ----
+m33<-filter(Nwm_meda, Station ==  2210) #    km dalla costa ----
+m34<-filter(Nwm_meda, Station ==  2212) #    km dalla costa ----
+m35<-filter(Nwm_meda, Station ==  2213) #    km dalla costa ----
+m36<-filter(Nwm_meda, Station ==  2215) #    km dalla costa ----
+m37<-filter(Nwm_meda, Station ==  2229) #    km dalla costa ----
+m38<-filter(Nwm_meda, Station ==  2232) #    km dalla costa ----
+m40<-filter(Nwm_meda, Station ==  2234) #    km dalla costa ----
+m41<-filter(Nwm_meda, Station ==  2237) #    km dalla costa ----
+m42<-filter(Nwm_meda, Station ==  2238) #    km dalla costa ----
+m43<-filter(Nwm_meda, Station ==  2239) #    km dalla costa ----
+m44<-filter(Nwm_meda, Station ==  2240) #    km dalla costa ----
+m45<-filter(Nwm_meda, Station ==  2241) #    km dalla costa ----
+m46<-filter(Nwm_meda, Station ==  2242) #    km dalla costa ----
+m47<-filter(Nwm_meda, Station ==  2243) #    km dalla costa ----
+m48<-filter(Nwm_meda, Station ==  2244) #    km dalla costa ----
+m49<-filter(Nwm_meda, Station ==  2245) #    km dalla costa ----
+m50<-filter(Nwm_meda, Station ==  2263) #    km dalla costa ----
+m51<-filter(Nwm_meda, Station ==  2264) #    km dalla costa ----
+m52<-filter(Nwm_meda, Station ==  2265) #    km dalla costa ----
+m53<-filter(Nwm_meda, Station ==  2266) #    km dalla costa ----
+m54<-filter(Nwm_meda, Station ==  2267) #    km dalla costa ----
+m55<-filter(Nwm_meda, Station ==  2268) #    km dalla costa ----
+m56<-filter(Nwm_meda, Station ==  2269) #    km dalla costa ----
+m57<-filter(Nwm_meda, Station ==  2270) #    km dalla costa ----
+m58<-filter(Nwm_meda, Station ==  2271) #    km dalla costa ----
+m59<-filter(Nwm_meda, Station ==  2272) #    km dalla costa ----
+m60<-filter(Nwm_meda, Station ==  2273) #    km dalla costa ----
+m61<-filter(Nwm_meda, Station ==  2274) #    km dalla costa ----
+m62<-filter(Nwm_meda, Station ==  2275) #    km dalla costa ----
+m63<-filter(Nwm_meda, Station ==  2276) #    km dalla costa ----
+m64<-filter(Nwm_meda, Station ==  2277) #    km dalla costa ----
+m65<-filter(Nwm_meda, Station ==  2278) #    km dalla costa ----
+m66<-filter(Nwm_meda, Station ==  2279) #    km dalla costa ----
+m67<-filter(Nwm_meda, Station ==  2280) #    km dalla costa ----
+m68<-filter(Nwm_meda, Station ==  2281) #    km dalla costa ----
+m69<-filter(Nwm_meda, Station ==  2282) #    km dalla costa ----
 
+m14<-filter(Nwm_meda, Station ==  1333) #  23 gen 98  43.43      7.25 
+m15<-filter(Nwm_meda, Station ==  1334) #  23 gen 98  43.43      7.25 
+m16<-filter(Nwm_meda, Station ==  1335) #  23 gen 98  43.43      7.25 
+m19<-filter(Nwm_meda, Station ==  1336) #  23 gen 98  43.43      7.25 
+
+m17<-filter(Nwm_meda, Station ==  2259) #  23 gen 98  43.43      7.25 
+m18<-filter(Nwm_meda, Station ==  2260) #  23 gen 98  43.43      7.25 
+m20<-filter(Nwm_meda, Station ==  2261) #  23 gen 98  43.43      7.25 
+m21<-filter(Nwm_meda, Station ==  2262) #  23 gen 98  43.43      7.25 
+
+#par(new=T)
+#feb     [77:87] --- uguale al secondo plot
+#feb  [88:99] # uguale al III
+
+str(m1$Depth)
 
 p1<-filter(Nwm_pros, Station == 933); p1<-p1[1:10,]
 p2<-filter(Nwm_pros, Station == 934);  p2<-p2[1:10,]
@@ -82,31 +151,59 @@ p3<-filter(Nwm_pros, Station == 935);  p3<-p3[1:10,]
 p4<-filter(Nwm_pros, Station == 936);  p4<-p4[1:10,]
 p5<-filter(Nwm_pros, Station == 937);  p5<-p5[1:10,]
 
- ### plot PROSOPE NWM
-plot(p1$POC_mgL, p1$Depth, ylim=c(200,0),xlim=c(0,70), col=col_months[9], type='o', pch=1, 
-     main='POC NWM - Cruise PROSOPE; 1999') #set
-par(new=T)
-plot(p2$POC_mgL, p2$Depth, ylim=c(200,0),xlim=c(0,70), col=col_months[9], type='o', pch=2)  #set
-par(new=T)
-plot(p3$POC_mgL, p3$Depth, ylim=c(200,0),xlim=c(0,70), col=col_months[10], type='o', pch=3)  #ott
-par(new=T)
-plot(p4$POC_mgL, p4$Depth, ylim=c(200,0),xlim=c(0,70), col=col_months[10], type='o', pch=4)  #ott
-par(new=T)
-plot(p5$POC_mgL, p5$Depth, ylim=c(200,0),xlim=c(0,70), col=col_months[10], type='o', pch=5)  #ott
 
-legend(30,100,legend=c('29 September 43.41 | 7.86','30 September 43.40 | 7.82',
-                         '02 October      43.35 | 7.8','01 October      43.37 | 7.86',
-                         '03 October      43.43 | 7.72'), 
-         col=c(col_months[9],col_months[9],col_months[10],col_months[10],col_months[10]),
-         pch=c(1,2,3,4,5))
+
+par(mfrow=c(1,4))
+######### plot POM 1975 --- maggio
+plot(Nwm_copin$POC_ugL, Nwm_copin$Depth, ylim=c(100,0), col=col_months[5], type='b', 
+     pch=1, cex=2,cex.axis=1.7,ylab='Depth (m)',xlab='ug/l',
+     main='POC NWM, Copin-Montegut (1975)')
+text(55,10,'May 42.00 | 4.75', cex=1.6)
+
+############ --------------------1991
+plot(m24$POC_ugL[1:11], m24$Depth[1:11], ylim=c(500,0),xlim=c(0,80), col=col_months[8],
+     type='b', pch=1, cex=2,cex.axis=1.7,xlab='ug/l',ylab='Depth (m)',
+     main='POC NWM - Cruise Medar (1991)') #   
+####################### ------------------ feb-apr 1999
+plot(m18$POC_ugL[13:24], m18$Depth[13:24], ylim=c(200,0),xlim=c(0,450), col=col_months[2],
+     type='o', pch=1, cex.axis=1.7,xlab='ug/l',ylab='Depth (m)',
+     main='POC NWM - Cruise Medar (1999)') #  24 feb '99   43.42 |   7.85
+par(new=T)
+plot(m20$POC_ugL[12:22], m20$Depth[12:22], ylim=c(200,0),xlim=c(0,450), col=col_months[3],
+     type='o', pch=1,cex.axis=1.7,cex=2, xlab='ug/l',ylab='Depth (m)',
+     main='POC NWM - Cruise Medar; 1999') #  19 mar '99   43.42 |  7.86
+par(new=T)
+plot(m21$POC_ugL[1:12], m21$Depth[1:12], ylim=c(200,0),xlim=c(0,450), col=col_months[4],
+     type='o', pch=1, cex.axis=1.7,cex=2,xlab='ug/l',ylab='Depth (m)',
+     main='POC NWM - Cruise Medar; 1999') #  11 apr '99   43.42 |  7.86
+
+legend(60,100,legend=c('05 Feb 43.15 | 5.12','05 Feb 43.11 | 5.12',
+                       '05 Feb 43.07 | 5.12','05 Feb 43.02 | 5.12',
+                       '05 Feb 43.02 | 5.12','05 Feb 43.07 | 5.13',
+                       '05 Feb 43.15 | 5.12'),
+       col=c(col_months[2],col_months[2],col_months[2],col_months[2],col_months[2]),
+       pch=c(1,2,3,4,5))
+par(new=T)
+### plot PROSOPE NWM -- POM Set-Oct 1999 ######### 
+plot(p1$POC_ugL, p1$Depth, ylim=c(160,0),xlim=c(0,70), col=col_months[9], type='o', pch=1, 
+     main='POC NWM - Cruise PROSOPE; 1999', xlab='ug/l',ylab='Depth (m)') #set
+par(new=T)
+plot(p2$POC_ugL, p2$Depth, ylim=c(160,0),xlim=c(0,70), col=col_months[9], type='o', pch=2,xlab='',ylab='')  #set
+par(new=T)
+plot(p3$POC_ugL, p3$Depth, ylim=c(160,0),xlim=c(0,70), col=col_months[10], type='o', pch=3,xlab='',ylab='')  #ott
+par(new=T)
+plot(p4$POC_ugL, p4$Depth, ylim=c(160,0),xlim=c(0,70), col=col_months[10], type='o', pch=4,xlab='',ylab='')  #ott
+par(new=T)
+plot(p5$POC_ugL, p5$Depth, ylim=c(160,0),xlim=c(0,70), col=col_months[10], type='o', pch=5,xlab='',ylab='')  #ott
+
+legend(30,100,legend=c('29 Sep 43.41 | 7.86','30 Sep 43.40 | 7.82',
+                       '02 Oct 43.35 | 7.8','01 Oct 43.37 | 7.86',
+                       '03 Oct 43.43 | 7.72'), 
+       col=c(col_months[9],col_months[9],col_months[10],col_months[10],col_months[10]),
+       pch=c(1,2,3,4,5))
 text(15,.100,'stations 933 -937')
 text(15,10,'min dist coast = 41 km')
 
-plot(Nwm_copin$POC_mgL, Nwm_copin$Depth, ylim=c(100,0), col=col_months[5], type='b', pch=19, 
-     main='POC NWM, May 1975', xlab='mg L')
-text(35,10,'May 42.00 | 4.75')
-col_months<-c("#c15063","#5fb14d","#7362cd","#b6b342","#b966bf",
-               "#d38c30","#688ccd","#cd4e34","#4bb092","#ce5b95","#737e38","#c07f56")
 
 Nwm_copin[1:6,]
 
@@ -161,10 +258,3 @@ C_N_ratio<-POM_med$C_N_ratio
 C_N<-C_N[complete.cases(C_N_ratio)]
 d<-density(C_N)
 plot(d)
-
-
-plot(POM_med$Longitude,POM_med$C_N_ratio)
-
-jitter(POM_med$Longitude, POM_med$Latitude)
-#text(POM_med$Longitude, POM_med$Latitude-.1,POM_med$C_N_ratio,pos=4., col='red')
-max(POM_med$C_N_ratio, na.rm=T)

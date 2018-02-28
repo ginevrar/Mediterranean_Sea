@@ -3,6 +3,8 @@
 #mappa2 <- get_map(location = c(4.5,42.8, 14,45),maptype =c('watercolor'))
 #mappa3 <- get_map(location = c(7,42.8, 9,45),maptype =c('watercolor'))
 
+
+
 g1<-ggmap(mappa1) + 
   geom_point(data = jan, alpha=.08,
              aes(x = Longitude, y = Latitude, size = POC, color=factor(Year)))+
