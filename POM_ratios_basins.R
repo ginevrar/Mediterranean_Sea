@@ -30,25 +30,25 @@ POM_med$Zone[POM_med$Longitude>28 & POM_med$Latitude<=37.5]<-'Lev'
 POM_med$Zone[POM_med$Longitude>23 & POM_med$Longitude<=28 & POM_med$Latitude>35.2]<-'Aeg'
 
 a<-POM_med[(POM_med$Zone=='Nad'),]
-Alb<-POM_med[(POM_med$Longitude<=-0.5),]; write.csv(Alb, file='POC_alboran.csv')
-Sww<-POM_med[(POM_med$Longitude>-0.5 & POM_med$Longitude<=5 & POM_med$Latitude<=39.5),];# write.csv(Sww, file='POC_sww.csv')
-Swe<-POM_med[(POM_med$Longitude>5 & POM_med$Longitude<=9 & POM_med$Latitude<=39.5),];# write.csv(Swe, file='POC_swe.csv')
+Alb<-POM_med[(POM_med$Longitude<=-0.5),]; #write.csv(Alb, file='POC_alboran.csv')
+Sww<-POM_med[(POM_med$Longitude>-0.5 & POM_med$Longitude<=5 & POM_med$Latitude<=39.5),];#write.csv(Sww, file='POC_sww.csv')
+Swe<-POM_med[(POM_med$Longitude>5 & POM_med$Longitude<=9 & POM_med$Latitude<=39.5),];#write.csv(Swe, file='POC_swe.csv')
 Tir<-POM_med[(POM_med$Longitude>9 & POM_med$Longitude<=16 & POM_med$Latitude<=41.5 & POM_med$Latitude>36.5),]; #write.csv(Tir, file='POC_tir.csv')
 Nwm_1<-POM_med[(POM_med$Latitude>39.5 & POM_med$Longitude<=9),]
 Nwm_2<-POM_med[(POM_med$Latitude>41.5 & POM_med$Longitude<=13),]
-Nwm<-rbind(Nwm_1,Nwm_2); #write.csv(Nwm, file='POC_nwm.csv')
+Nwm<-rbind(Nwm_1,Nwm_2); write.csv(Nwm, file='POC_nwm.csv')
 Io1<-POM_med[(POM_med$Longitude>12.5 & POM_med$Longitude<=16 & POM_med$Latitude<=38),]
 Io2<-POM_med[(POM_med$Longitude>16 & POM_med$Longitude<=21.5 & POM_med$Latitude<=40),]
-Ion<-rbind(Io1,Io2)  #write.csv(Ion, file='POC_jon.csv')
-Nad<-POM_med[(POM_med$Latitude>42.3 & POM_med$Longitude>12.5),] #write.csv(Nad, file='POC_nad.csv')
+Ion<-rbind(Io1,Io2) ; write.csv(Ion, file='POC_jon.csv')
+Nad<-POM_med[(POM_med$Latitude>42.3 & POM_med$Longitude>12.5),];write.csv(Nad, file='POC_nad.csv')
 Sad1<-POM_med[(POM_med$Latitude<=42.3 & POM_med$Latitude>42 & POM_med$Longitude>14.8),]
 Sad2<-POM_med[(POM_med$Latitude<=42 & POM_med$Latitude>40 & POM_med$Longitude>16 & POM_med$Longitude<=20),]
-Sad<-rbind(Sad1,Sad2)  #write.csv(Sad, file='POC_sad.csv')
+Sad<-rbind(Sad1,Sad2);  write.csv(Sad, file='POC_sad.csv')
 Lev1<-POM_med[(POM_med$Longitude>21.5 & POM_med$Longitude<=23),]
 Lev2<-POM_med[(POM_med$Longitude>23 & POM_med$Longitude<=28 & POM_med$Latitude<=35.2),]
 Lev3<-POM_med[(POM_med$Longitude>28 & POM_med$Latitude<=37.5),]
-Lev<-rbind(Lev1,Lev2,Lev3)#write.csv(Lev, file='POC_lev.csv')
-Aeg<-POM_med[(POM_med$Longitude>23 & POM_med$Longitude<=28 & POM_med$Latitude>35.2),] #write.csv(Aeg, file='POC_aeg.csv')
+Lev<-rbind(Lev1,Lev2,Lev3);write.csv(Lev, file='POC_lev.csv')
+Aeg<-POM_med[(POM_med$Longitude>23 & POM_med$Longitude<=28 & POM_med$Latitude>35.2),]; write.csv(Aeg, file='POC_aeg.csv')
 
 boxplot(Alb$POC_ugL, Sww$POC_ugL, Swe$POC_ugL, Tir$POC_ugL, Nwm$POC_ugL, 
 Ion$POC_ugL, Nad$POC_ugL, Sad$POC_ugL, Lev$POC_ugL, Aeg$POC_ugL)
@@ -191,7 +191,6 @@ m24<-filter(Nwm_meda, Station ==  2200) #  8 ago 91    41.52   12.11   !! SLOPE 
 #par(new=T)
 #feb     [77:87] --- uguale al secondo plot
 #feb  [88:99] # uguale al III
-
 str(m1$Depth)
 
 p1<-filter(Nwm_pros, Station == 933); p1<-p1[1:10,]
@@ -200,56 +199,59 @@ p3<-filter(Nwm_pros, Station == 935);  p3<-p3[1:10,]
 p4<-filter(Nwm_pros, Station == 936);  p4<-p4[1:10,]
 p5<-filter(Nwm_pros, Station == 937);  p5<-p5[1:10,]
 
-
 dev.new()
 par(mfrow=c(1,4))
 ######### plot POM 1975 --- maggio
 plot(Nwm_copin$POC_ugL, Nwm_copin$Depth, xlim=c(0,180), ylim=c(100,0), col=col_months[5], type='b', 
-     pch=1, cex=2,cex.axis=1.7,cex.lab=1.4,ylab='Depth (m)',xlab='POC ug/l',
+     pch=1, cex=2,cex.axis=1.7,cex.lab=1.4,ylab='Depth (m)',xlab='POC ug/l',lty=2,
      main='Copin-Montegut (1975)')
 text(55,10,'May \n 42.00 | 4.75', cex=1.6)
 ############ --------------------1991
 plot(m24$POC_ugL[1:11], m24$Depth[1:11], ylim=c(500,0),xlim=c(0,80), col=col_months[8],
-     type='b', pch=1, cex=2,cex.axis=1.7,cex.lab=1.4,xlab='POC ug/l',ylab='Depth (m)',
+     type='b', pch=1, cex=2,cex.axis=1.7,cex.lab=1.4,xlab='POC ug/l',ylab='Depth (m)',lty=2,
      main='Cruise Medar (1991)') #
-text(5,10,'Ago \n 41.60 | 12.11 ', cex=1.6)
+text(10,10,'Ago \n 41.60 | 12.11 ', cex=1.6)
 ####################### ------------------ feb-apr 1999
-plot(m18$POC_ugL[13:24], m18$Depth[13:24], ylim=c(200,0),xlim=c(0,300), col=col_months[2],
-     type='o', pch=1, cex.axis=1.7,cex=2,cex.lab=1.4,xlab='POC ug/l',ylab='Depth (m)',
-     ) #  24 feb '99   43.42 |   7.85
+plot(m18$POC_ugL[13:24], m18$Depth[13:24], ylim=c(200,0),xlim=c(0,300), col=col_months[2],lty=2,
+     type='o', pch=1, cex.axis=1.7,cex=2,cex.lab=1.4,xlab='POC ug/l',ylab='Depth (m)') #  24 feb '99   43.42 |   7.85
 par(new=T)
-plot(m20$POC_ugL[12:22], m20$Depth[12:22], ylim=c(200,0),xlim=c(0,300), col=col_months[3],
+plot(m20$POC_ugL[12:22], m20$Depth[12:22], ylim=c(200,0),xlim=c(0,300), col=col_months[3],lty=2,
      xaxt='n',yaxt='n',type='o', pch=2,cex.axis=1.7,cex=2, xlab='',ylab='',
      main='Cruise Medar (1999)') #  19 mar '99   43.42 |  7.86
 par(new=T)
-plot(m21$POC_ugL[1:12], m21$Depth[1:12], ylim=c(200,0),xlim=c(0,300), col=col_months[4],
-     xaxt='n',yaxt='n',type='o', pch=3, cex.axis=1.7,cex=2,xlab='',ylab='',
-     ) #  11 apr '99   43.42 |  7.86
-legend(60,160,bty='n',cex=1.3,
-       legend=c('24 feb 99 43.42 | 7.85', '19 mar 99 43.42 | 7.86',
-                       '11 apr 99 43.42 | 7.86'),
+plot(m21$POC_ugL[1:12], m21$Depth[1:12], ylim=c(200,0),xlim=c(0,300), col=col_months[4],lty=2,
+     xaxt='n',yaxt='n',type='o', pch=3, cex.axis=1.7,cex=2,xlab='',ylab='') #  11 apr '99   43.42 |  7.86
+legend(60,160,bty='n',cex=1.6,
+       legend=c('24 feb 43.42 | 7.85', '19 mar 43.42 | 7.86',
+                       '11 apr 43.42 | 7.86'),
        col=c(col_months[2],col_months[3],col_months[4]), 
        pch=c(1,2,3))
 
 ### plot PROSOPE NWM -- POM Set-Oct 1999 ######### 
-plot(p1$POC_ugL, p1$Depth, ylim=c(160,0),xlim=c(0,70), col=col_months[9], type='o', pch=1, 
-     main='Cruise PROSOPE (1999)', xlab='ug/l',ylab='Depth (m)') #set
+plot(p1$POC_ugL, p1$Depth, cex.axis=1.7,cex=2,cex.lab=1.4, ylim=c(160,0),lty=2,
+     xlim=c(0,70), col=col_months[9], type='o', pch=1, 
+     main='Cruise PROSOPE (1999)', xlab='POC ug/l',ylab='Depth (m)') #set
 par(new=T)
-plot(p2$POC_ugL, p2$Depth, ylim=c(160,0),xlim=c(0,70), col=col_months[9], type='o', pch=2,xlab='',ylab='')  #set
+plot(p2$POC_ugL, p2$Depth, ylim=c(160,0),xlim=c(0,70),cex.axis=1.7,cex=2,xaxt='n',yaxt='n',lty=2,
+     cex.lab=1.4, col=col_months[9], type='o', pch=2,xlab='',ylab='')  #set
 par(new=T)
-plot(p3$POC_ugL, p3$Depth, ylim=c(160,0),xlim=c(0,70), col=col_months[10], type='o', pch=3,xlab='',ylab='')  #ott
+plot(p3$POC_ugL, p3$Depth, ylim=c(160,0),xlim=c(0,70), col=col_months[10],xaxt='n',yaxt='n',lty=2,
+     cex.axis=1.7,cex=2,cex.lab=1.4,
+     type='o', pch=3,xlab='',ylab='')  #ott
 par(new=T)
-plot(p4$POC_ugL, p4$Depth, ylim=c(160,0),xlim=c(0,70), col=col_months[10], type='o', pch=4,xlab='',ylab='')  #ott
+plot(p4$POC_ugL, p4$Depth, ylim=c(160,0),xlim=c(0,70), col=col_months[10], xaxt='n',yaxt='n',lty=2,
+     type='o', pch=4,xlab='',ylab='',cex.axis=1.7,cex=2,cex.lab=1.4)  #ott
 par(new=T)
-plot(p5$POC_ugL, p5$Depth, ylim=c(160,0),xlim=c(0,70), col=col_months[10], type='o', pch=5,xlab='',ylab='')  #ott
+plot(p5$POC_ugL, p5$Depth, ylim=c(160,0),xlim=c(0,70),cex.axis=1.7,cex=2,cex.lab=1.4, xaxt='n',yaxt='n',lty=2,
+     col=col_months[10], type='o', pch=5,xlab='',ylab='')  #ott
 
 legend(10,100,bty='n',legend=c('29 Sep 43.41 | 7.86','30 Sep 43.40 | 7.82',
                        '02 Oct 43.35 | 7.8','01 Oct 43.37 | 7.86',
-                       '03 Oct 43.43 | 7.72'), 
+                       '03 Oct 43.43 | 7.72'), cex=1.6,
        col=c(col_months[9],col_months[9],col_months[10],col_months[10],col_months[10]),
        pch=c(1,2,3,4,5))
-text(15,.100,'stations 933 -937')
-text(15,10,'min dist coast = 41 km')
+#text(15,.100,'stations 933 -937')
+#text(15,10,'min dist coast = 41 km')
 
 
 Nwm_copin[1:6,]
