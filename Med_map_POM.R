@@ -9,9 +9,6 @@ POM_med<-POM[(POM$Latitude>29 & POM$Latitude<45 & POM$Longitude>-6 & POM$Longitu
 str(POM_med)
 summary(POM_med$POC)
 
-boxplot(POM_med$POC)
-
-
 subset1<-select(POM_med, Dataset, Station, Year, Month, Day, Depth, Latitude, Longitude, POC)
 # jan <- dplyr::filter(POM_med, grepl("1", Month)) questo prende sia il mese 1 che il mese 10, 11,12
 # filter(bison, ITIScommonName == "Carolina Chickadee", 
@@ -30,11 +27,23 @@ mappa__ <- get_map(location = c(-6,33,28,45), maptype =c('toner'))
              
  #            data = f,color="black",shape=21)
 summary(POM_med$Year)
+ggplotColours <- function(n = 12, h = c(0, 360) + 15){
+  if ((diff(h) %% 360) < 1) h[2] <- h[2] - 360/n
+  hcl(h = (seq(h[1], h[2], length = n)), c = 100, l = 65)
+}
+
+col_months<-ggplotColours(n = 11)
+
 png(file = "POC_med_sea_byMonth_oneplot_.png",width = 21, height = 18, units = "cm", res = 800)
+
 ggmap(mappa__) + geom_point(data = POM_med, alpha=.1,aes(x = Longitude, y = Latitude,
                                               size = POC, color=factor(Month)))+
-  scale_size_continuous(range = c(.4,15))+
-  theme_minimal()
+  scale_size_continuous(range = c(1,15))+
+  theme_minimal()+
+  scale_colour_manual(values = col_months)
+
+
+
 dev.off()
 png(file = "leg.png",width = 21, height = 18, units = "cm", res = 800)
 ggmap(mappa__) + geom_point(data = POM_med, alpha=1,aes(x = Longitude, y = Latitude,
