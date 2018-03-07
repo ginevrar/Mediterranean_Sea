@@ -24,7 +24,8 @@ POM_med$N_P_ratio = POM_med$PON/POM_med$POP
 POM_med$Zone[POM_med$Longitude<=-0.5] <- "Alb"
 POM_med$Zone[POM_med$Longitude>-0.5 & POM_med$Longitude<=5 & POM_med$Latitude<=39.5]<-'Sww'
 POM_med$Zone[POM_med$Longitude>5 & POM_med$Longitude<=9 & POM_med$Latitude<=39.5]<-'Swe'
-POM_med$Zone[POM_med$Longitude>9 & POM_med$Longitude<=16 & POM_med$Latitude<=41.5 & POM_med$Latitude>36.5]<-'Tir'
+POM_med$Zone[POM_med$Longitude>9 & POM_med$Longitude<=16 & 
+               POM_med$Latitude<=41.5 & POM_med$Latitude>36.5]<-'Tir'
 POM_med$Zone[POM_med$Latitude>39.5 & POM_med$Longitude<=9]<-'Nw'
 POM_med$Zone[POM_med$Latitude>41.5 & POM_med$Longitude<=13]<-'Nw'
 POM_med$Zone[POM_med$Longitude>12.5 & POM_med$Longitude<=16 & POM_med$Latitude<=38]<-'Ion'
@@ -39,7 +40,7 @@ a<-POM_med[(POM_med$Zone=='Nad'),]
 Alb<-POM_med[(POM_med$Longitude<=-0.5),]; #write.csv(Alb, file='POC_alboran.csv')
 Sww<-POM_med[(POM_med$Longitude>-0.5 & POM_med$Longitude<=5 & POM_med$Latitude<=39.5),];#write.csv(Sww, file='POC_sww.csv')
 Swe<-POM_med[(POM_med$Longitude>5 & POM_med$Longitude<=9 & POM_med$Latitude<=39.5),];#write.csv(Swe, file='POC_swe.csv')
-Tir<-POM_med[(POM_med$Longitude>9 & POM_med$Longitude<=16 & POM_med$Latitude<=41.5 & POM_med$Latitude>36.5),]; #write.csv(Tir, file='POC_tir.csv')
+Tir<-filter(POM_med, Zone ==  'Tir')
 Nwm_1<-POM_med[(POM_med$Latitude>39.5 & POM_med$Longitude<=9),]
 Nwm_2<-POM_med[(POM_med$Latitude>41.5 & POM_med$Longitude<=13),]
 Nwm<-rbind(Nwm_1,Nwm_2); write.csv(Nwm, file='POC_nwm.csv')

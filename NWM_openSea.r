@@ -28,7 +28,6 @@ POM_med$Zone[POM_med$Longitude>23 & POM_med$Longitude<=28 & POM_med$Latitude<=35
 POM_med$Zone[POM_med$Longitude>28 & POM_med$Latitude<=37.5]<-'Lev'
 POM_med$Zone[POM_med$Longitude>23 & POM_med$Longitude<=28 & POM_med$Latitude>35.2]<-'Aeg'
 
-
 Nwm_1<-POM_med[(POM_med$Latitude>39.5 & POM_med$Longitude<=9),]
 Nwm_2<-POM_med[(POM_med$Latitude>41.5 & POM_med$Longitude<=13),]
 Nwm<-rbind(Nwm_1,Nwm_2); write.csv(Nwm, file='POC_nwm.csv')
@@ -47,17 +46,11 @@ Nwm_moog<-Nwm[(Nwm$Dataset=='MOOGLI'),] #stessi dati di MEDAR (?) moo4 = m10; mo
 summary(factor(Nwm_moog$Station))
 
 library(dplyr)
-#moo1<-filter(Nwm_moog, Station ==  1328) #   SLOPE ----
-#moo2<-filter(Nwm_moog, Station ==  1329) #   SLOPE ----
-#moo3<-filter(Nwm_moog, Station ==  1330) #   SLOPE ----
-#moo4<-filter(Nwm_moog, Station ==  1331) #   COSTA ----
-#moo5<-filter(Nwm_moog, Station ==  1332) #   osta ----
-#moo6<-filter(Nwm_moog, Station ==  1333) #   osta ----
-#moo7<-filter(Nwm_moog, Station ==  1334) #   osta ----
-#moo8<-filter(Nwm_moog, Station ==  1335) #   osta ----
-#moo9<-filter(Nwm_moog, Station ==  1336) #   osta ----
-#moo10<-filter(Nwm_moog, Station ==  1337) #   osta ----
-#moo11<-filter(Nwm_moog, Station ==  1338) #   osta ----
+#moo1<-filter(Nwm_moog, Station ==  1328) #   SLOPE ----#moo2<-filter(Nwm_moog, Station ==  1329) #   SLOPE ----
+#moo3<-filter(Nwm_moog, Station ==  1330) #   SLOPE ----#moo4<-filter(Nwm_moog, Station ==  1331) #   COSTA ----
+#moo5<-filter(Nwm_moog, Station ==  1332) #   osta ----#moo6<-filter(Nwm_moog, Station ==  1333) #   osta ----
+#moo7<-filter(Nwm_moog, Station ==  1334) #   osta ----#moo8<-filter(Nwm_moog, Station ==  1335) #   osta ----
+#moo9<-filter(Nwm_moog, Station ==  1336) #   osta ----#moo10<-filter(Nwm_moog, Station ==  1337) #   osta ----#moo11<-filter(Nwm_moog, Station ==  1338) #   osta ---
 
 m26<-filter(Nwm_meda, Station ==  2202) #   osta ----
 m27<-filter(Nwm_meda, Station ==  2203) #    km dalla costa ----
@@ -110,6 +103,9 @@ dati_1999<-filter(Nwm_meda, Year==1999)
 dati_1999_open<-dati_1999[(dati_1999$Latitude>42 & dati_1999$Longitude>7),]
 
 dati_2000<-filter(Nwm_meda, Year==2000)
+dati_2000_b<-dati_2000[(dati_2000$Longitude>7),]
+
+dati_2001<-filter(Nwm_meda, Year==2001)
 dati_2000_b<-dati_2000[(dati_2000$Longitude>7),]
 
 summary(factor(dati_2000_b$Station))
@@ -265,8 +261,8 @@ dev.off()
 
 #text(15,.100,'stations 933 -937')
 ###-------------------- Medar 2000
-png(file = "NWM_medar2000_profiles544.png",width = 33, height = 15, units = "cm", res = 200)
-par(mfrow=c(1,11),mar=c(2,0.5,2,0), 
+png(file = "NWM_medar2000_profiles5441.png",width = 34, height = 19, units = "cm", res = 200)
+par(mfrow=c(1,11),mar=c(2,1.1,2,0), 
     oma=c(0,4.2,3,2.2))
 plot(m55$POC_ugL[1:12], m55$Depth[1:12], ylim=c(200,0),xlim=c(0,200),
      cex.axis=1.7,cex=2,cex.lab=1.4,lty=2,
@@ -277,70 +273,85 @@ mtext('Depth',side=2,outer=F, at=100, line=3.4)
 plot(m57$POC_ugL[1:10], m57$Depth[1:10], ylim=c(200,0),xlim=c(0,200),
      cex.axis=1.7,cex=2,cex.lab=1.4,lty=2, yaxt='n',
      col=col_months[2], type='o', pch=1,xlab='',ylab='')  #ott
-text(140, 150,cex=1.2,'22 Feb  \n 43.41 | 7.85')
+text(130, 150,cex=1.2,'22 Feb  \n 43.41 | 7.85')
 
 plot(m58$POC_ugL[1:12], m58$Depth[1:12], ylim=c(200,0),xlim=c(0,200),
      cex.axis=1.7,cex=2,cex.lab=1.4,lty=2, yaxt='n',
      col=col_months[3], type='o', pch=3,xlab='',ylab='')  #ott
-text(45,80,cex=1.2,'28 Mar \n 43.42 | 7.85')
+text(70,80,cex=1.2,'28 Mar \n 43.42 | 7.85')
+abline(h=80)
 
 plot(m59$POC_ugL[1:12], m59$Depth[1:12], ylim=c(200,0),xlim=c(0,200),
      cex.axis=1.7,cex=2,cex.lab=1.4, lty=2, yaxt='n',
      col=col_months[4], type='o', pch=4,xlab='',ylab='')  #ott
-text(140,100,cex=1.2,'14 Apr \n 43.43 | 7.85')
+text(135,100,cex=1.2,'14 Apr \n 43.43 | 7.85')
 
 plot(m60$POC_ugL[1:9], m60$Depth[1:9], ylim=c(200,0),xlim=c(0,200),
      cex.axis=1.7,cex=2,cex.lab=1.4, lty=2, yaxt='n',
      col=col_months[5], type='o', pch=5,xlab='',ylab='')  #ott
-text(140,100,cex=1.2,'25 May \n 43.42 | 7.85')
+text(135,100,cex=1.2,'25 May \n 43.42 | 7.85')
 
 plot(m61$POC_ugL[1:12], m61$Depth[1:12], ylim=c(200,0),xlim=c(0,200),
      cex.axis=1.7,cex=2,cex.lab=1.4,lty=2, yaxt='n',
      col=col_months[6], type='o', pch=5,xlab='',ylab='')  #ott
-text(140,100,cex=1.2,'17 Jun \n 43.4 | 7.83')
+text(136,100,cex=1.2,'17 Jun \n 43.4 | 7.83')
 
 plot(m62$POC_ugL[1:12], m62$Depth[1:12], ylim=c(200,0),xlim=c(0,200),
      cex.axis=1.7,cex=2,cex.lab=1.4,lty=2,   yaxt='n',
      col=col_months[7], type='o', pch=5,xlab='',ylab='')  #ott
-text(140,100,cex=1.2,'21 Jul \n 43.41 | 7.82')
+text(130,100,cex=1.2,'21 Jul \n 43.41 | 7.82')
 #mtext('Depth',side=2,outer=F, at=100, line=3.4)
 
 plot(m63$POC_ugL[1:10], m63$Depth[1:10], ylim=c(200,0),xlim=c(0,200),
      cex.axis=1.7,cex=2,cex.lab=1.4, yaxt='n',lty=2,
      col=col_months[9], type='o', pch=5,xlab='',ylab='')  #ott
-text(140,100,cex=1.2,'1 Sep \n 43.42 | 7.85')
+text(130,100,cex=1.2,'1 Sep \n 43.42 | 7.85')
 
 plot(m64$POC_ugL[1:12], m64$Depth[1:12], ylim=c(200,0),xlim=c(0,200),
      cex.axis=1.7,cex=2,cex.lab=1.4, yaxt='n',lty=2,
      col=col_months[9], type='o', pch=5,xlab='',ylab='')  #ott
-text(140,100,cex=1.2,'23 Sep \n 43.42 | 7.85')
+text(130,170,cex=1.2,'23 Sep \n 43.42 | 7.85')
 
 plot(m65$POC_ugL[1:10], m65$Depth[1:10], ylim=c(200,0),xlim=c(0,200),
      cex.axis=1.7,cex=2,cex.lab=1.4, yaxt='n',lty=2,
      col=col_months[10], type='o', pch=5,xlab='',ylab='')  #ott
-text(140,100,cex=1.2,'17 Oct \n 43.42 | 7.85')
+text(120,170,cex=1.2,'17 Oct \n 43.42 | 7.85')
 
 plot(m66$POC_ugL[1:12], m66$Depth[1:12], ylim=c(200,0),xlim=c(0,200),
      cex.axis=1.7,cex=2,cex.lab=1.4,yaxt='n',lty=2,
      col=col_months[11], type='o', pch=5,xlab='',ylab='')  #ott
-text(140,100,cex=1.2,'6 Dec \n 43.43 | 7.85')
-title(main='Monthly POC (ug /l) in the NWM \n Medar cruise (2000)', outer=T, cex=2.8)
+text(130,100,cex=1.2,'6 Dec \n 43.43 | 7.85')
+title(main='Monthly POC (ug /l) in the NWM \n Medar cruise (2000)', outer=T, cex=6.8)
 dev.off()
 
 
-m61<-filter(Nwm_meda, Station ==  2274) #    km dalla costa ----
-m62<-filter(Nwm_meda, Station ==  2275) #    km dalla costa ----
-m63<-filter(Nwm_meda, Station ==  2276) #    km dalla costa ----
-m64<-filter(Nwm_meda, Station ==  2277) #    km dalla costa ----
-m65<-filter(Nwm_meda, Station ==  2278) #    km dalla costa ----
-m66<-filter(Nwm_meda, Station ==  2279) #    km dalla costa ----
 
+png(file = "NWM_medar2001_profiles.png",width = 29, height = 19, units = "cm", res = 200)
+par(mfrow=c(1,3),mar=c(2,3.1,2,0), 
+    oma=c(0,4.2,3,2.2))
+plot(m67$POC_ugL[1:12], m67$Depth[1:12], ylim=c(2000,0),xlim=c(0,250),
+     cex.axis=1.7,cex=2,cex.lab=1.4,lty=2,
+     col=col_months[2], type='o', pch=1,xlab='',ylab='',fg="chartreuse3", col.axis ='black' )  #ott
+text(130, 500,cex=1.6,'20 Feb \n 43.38 | 7.68')
+mtext('Depth',side=2,outer=F, at=1000, line=3.4)
+
+plot(m68$POC_ugL[1:11], m68$Depth[1:11], ylim=c(200,0),xlim=c(0,250),
+     cex.axis=1.7,cex=2,cex.lab=1.4,lty=2,fg="royalblue",
+     col=col_months[4], type='o', pch=1,xlab='',ylab='')  #ott
+text(130, 150,cex=1.6,'27 Apr \n 43.42 | 7.98')
+
+plot(m69$POC_ugL[1:12], m69$Depth[1:12], ylim=c(200,0),xlim=c(0,200),fg="royalblue",
+     cex.axis=1.7,cex=2,cex.lab=1.4,lty=2, 
+     col=col_months[5], type='o', pch=1,xlab='',ylab='')  #ott
+text(130, 150,cex=1.6,'23 May  \n 43.42 | 7.83')
+title(main='Monthly POC (ug /l) in the NWM \n Medar cruise (2001)', outer=T, cex=6.8)
+dev.off()
 
 #text(15,10,'min dist coast = 41 km')
 
 
 
-dati_2000_surf<-dati_2000_b[(dati_2000_b$Depth<=80),]
+dati_2000_surf<-dati_2000_b[(dati_2000_b$Depth<80),]
 dati_2000_prof<-dati_2000_b[(dati_2000_b$Depth>80),]
 
 gg1<-ggplot(dati_2000_surf, colour=col_months,aes(y=POC_ugL, x=factor(Month), group=Month )) +

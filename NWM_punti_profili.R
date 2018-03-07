@@ -36,8 +36,6 @@ nw21<-ggmap(mappa1b) + geom_point(data = Nwm, alpha=.8,size=5,
   scale_size_continuous(range = c(.2,20),limits=c(1.9,1406.16))+
   theme_minimal()
 #  theme(legend.position="none")
-
-
 #if(!require(devtools)) install.packages("devtools")
 #devtools::install_github("kassambara/ggpubr")
 
@@ -46,8 +44,7 @@ library(ggpubr)
 
 png(file = "NWM_punti_anni2.png",width = 24, height = 18, units = "cm", res = 300)
 ggarrange(nw1, nw21, 
-          labels = c("A", "B"),
-          ncol = 2, nrow = 1)
+          labels = c("A", "B"), ncol = 2, nrow = 1)
 dev.off()
 
 
