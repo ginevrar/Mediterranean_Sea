@@ -1,4 +1,4 @@
-setwd('L:\\il mio Drive\\MedSea')
+setwd('L:/Il mio Drive/MedSea')
 setwd('C:/Users/gi/Documents/GitHub/Mediterranean_Sea')
 
 POM<-read.csv('POM_data_DRYAD_.csv', sep=';');str(POM)
@@ -22,19 +22,36 @@ POM_med$C_P_ratio = POM_med$POC/POM_med$POP
 POM_med$N_P_ratio = POM_med$PON/POM_med$POP
 
 POM_med$Zone[POM_med$Longitude<=-0.5] <- "Alb"
-POM_med$Zone[POM_med$Longitude>-0.5 & POM_med$Longitude<=5 & POM_med$Latitude<=39.5]<-'Sww'
+POM_med$Zone[POM_med$Longitude>-0.5 & 
+               POM_med$Longitude<=5 & 
+               POM_med$Latitude<=39.5]<-'Sww'
 POM_med$Zone[POM_med$Longitude>5 & POM_med$Longitude<=9 & POM_med$Latitude<=39.5]<-'Swe'
 POM_med$Zone[POM_med$Longitude>9 & POM_med$Longitude<=16 & 
                POM_med$Latitude<=41.5 & POM_med$Latitude>36.5]<-'Tir'
 POM_med$Zone[POM_med$Latitude>39.5 & POM_med$Longitude<=9]<-'Nw'
 POM_med$Zone[POM_med$Latitude>41.5 & POM_med$Longitude<=13]<-'Nw'
+
 POM_med$Zone[POM_med$Longitude>12.5 & POM_med$Longitude<=16 & POM_med$Latitude<=38]<-'Ion'
 POM_med$Zone[POM_med$Longitude>16 & POM_med$Longitude<=21.5 & POM_med$Latitude<=40]<-'Ion'
+
 POM_med$Zone[POM_med$Latitude>42.3 & POM_med$Longitude>12.5]<-'Nad'
+
+POM_med$Zone[POM_med$Latitude<=42.3 & POM_med$Latitude>42 & POM_med$Longitude>14.8]<-'Sad'
+POM_med$Zone[POM_med$Latitude<=42 & POM_med$Latitude>40 & POM_med$Longitude>16 & POM_med$Longitude<=20]<-'Sad'
+
 POM_med$Zone[POM_med$Longitude>21.5 & POM_med$Longitude<=23]<-'Lev'
 POM_med$Zone[POM_med$Longitude>23 & POM_med$Longitude<=28 & POM_med$Latitude<=35.2]<-'Lev'
 POM_med$Zone[POM_med$Longitude>28 & POM_med$Latitude<=37.5]<-'Lev'
 POM_med$Zone[POM_med$Longitude>23 & POM_med$Longitude<=28 & POM_med$Latitude>35.2]<-'Aeg'
+
+
+
+Sad1<-POM_med[(POM_med$Latitude<=42.3 & POM_med$Latitude>42 & POM_med$Longitude>14.8),]
+Sad2<-POM_med[(POM_med$Latitude<=42 & POM_med$Latitude>40 & POM_med$Longitude>16 & POM_med$Longitude<=20),]
+
+
+write.csv(POM_med, file='POM_Med.csv')
+
 
 a<-POM_med[(POM_med$Zone=='Nad'),]
 Alb<-POM_med[(POM_med$Longitude<=-0.5),]; #write.csv(Alb, file='POC_alboran.csv')
@@ -48,8 +65,10 @@ Io1<-POM_med[(POM_med$Longitude>12.5 & POM_med$Longitude<=16 & POM_med$Latitude<
 Io2<-POM_med[(POM_med$Longitude>16 & POM_med$Longitude<=21.5 & POM_med$Latitude<=40),]
 Ion<-rbind(Io1,Io2) ; write.csv(Ion, file='POC_jon.csv')
 Nad<-POM_med[(POM_med$Latitude>42.3 & POM_med$Longitude>12.5),];write.csv(Nad, file='POC_nad.csv')
+
 Sad1<-POM_med[(POM_med$Latitude<=42.3 & POM_med$Latitude>42 & POM_med$Longitude>14.8),]
 Sad2<-POM_med[(POM_med$Latitude<=42 & POM_med$Latitude>40 & POM_med$Longitude>16 & POM_med$Longitude<=20),]
+
 Sad<-rbind(Sad1,Sad2);  write.csv(Sad, file='POC_sad.csv')
 Lev1<-POM_med[(POM_med$Longitude>21.5 & POM_med$Longitude<=23),]
 Lev2<-POM_med[(POM_med$Longitude>23 & POM_med$Longitude<=28 & POM_med$Latitude<=35.2),]
@@ -139,7 +158,6 @@ moo8<-filter(Nwm_moog, Station ==  1335) #   osta ----
 moo9<-filter(Nwm_moog, Station ==  1336) #   osta ----
 moo10<-filter(Nwm_moog, Station ==  1337) #   osta ----
 moo11<-filter(Nwm_moog, Station ==  1338) #   osta ----
-
 
 m26<-filter(Nwm_meda, Station ==  2202) #   osta ----
 m27<-filter(Nwm_meda, Station ==  2203) #    km dalla costa ----

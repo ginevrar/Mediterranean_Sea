@@ -28,7 +28,7 @@ POM_med$Zone[POM_med$Longitude>23 & POM_med$Longitude<=28 & POM_med$Latitude<=35
 POM_med$Zone[POM_med$Longitude>28 & POM_med$Latitude<=37.5]<-'Lev'
 POM_med$Zone[POM_med$Longitude>23 & POM_med$Longitude<=28 & POM_med$Latitude>35.2]<-'Aeg'
 
-Tir<-POM_med[(POM_med$Longitude>9 & POM_med$Longitude<=16 & POM_med$Latitude<=41.5 & POM_med$Latitude>36.5),]
+Tir<-filter(POM_med, Zone ==  'Tir')
 
 POM_med$Zone[POM_med$Longitude>9 & POM_med$Longitude<=16 & 
                POM_med$Latitude<=41.5 & POM_med$Latitude>36.5]<-'Tir'
@@ -42,8 +42,6 @@ t2<-filter(t_1991, Station ==  2198)
 t3<-filter(t_1991, Station ==  2199)
 t4<-filter(t_1991, Station ==  2205)
 t5<-filter(t_1991, Station ==  2206)
-
-
 
   png(file = "Tir_medar1991_profiles.png",width = 29, height = 19, units = "cm", res = 200)
   par(mfrow=c(1,4),mar=c(2,3.1,2,0), 
@@ -122,7 +120,7 @@ t3_t1$dfac<-factor(t3_t1$dfac, levels = c("500-600","400-500","300-400","200-300
                                           "30-40","20-30","10-20","0-10"))
 max(t_1991$Depth)
 
-t1
+
 gg2<- ggplot(t3_t1, aes(y=POC_ugL, x=factor(dfac), group=dfac )) +
   geom_boxplot(fill= '#00A6FF',aes(alpha=.8))+
   coord_flip()+
@@ -139,6 +137,27 @@ png(file ="Tir_Boxplot_POC.png",width = 10.5, height = 14.5, units = "cm", res =
 plot(gg2)
 dev.off()
 
+
+gg3<- ggplot(t3_t1, aes(y=C_N_ratio, x=factor(dfac), group=dfac )) +
+  geom_boxplot(fill= '#00A6FF',aes(alpha=.8))+
+  coord_flip()+
+  theme_minimal()+
+  labs(title ='CN ratio August, Tirrenian Sea', subtitle ='Slope (st. 2197, 2199) - Medar 1991')+
+  theme(
+    plot.title = element_text(size =12))+ 
+  xlab('Depth layer')+
+  ylab('C/N')+
+  guides(fill=FALSE)+
+  guides(alpha=FALSE)
+
+#N/P e C/P ratio not available
+png(file ="Tir_Boxplot_CN_ratio.png",width = 10.5, height = 14.5, units = "cm", res = 200)
+plot(gg3)
+dev.off()
+
+png(file ="Tir_Boxplot_POC_andCN_ratio.png",width = 21, height = 14.5, units = "cm", res = 200)
+ggarrange(gg2,gg3,ncol = 2, nrow = 1)
+dev.off()
 t_1999<-filter(Tir, Year ==  1999) #   osta ----
 
 png(file ="Tir_profile_1999.png",width = 10,height = 19, units = "cm", res = 200)
@@ -151,20 +170,26 @@ dev.off()
 
 main='Tir, Medar cruise (11 Ago 1991) '
 
+
+
+
 ## COSTIERO
-plot(t2$POC_ugL[1:7],t2$Depth[1:7] ,fg="chartreuse3", ylim=c(150,0), xlim=c(0,200),col=col_months[8],type='b', 
-     pch=1, cex=2,cex.axis=1.7,cex.lab=1.4,ylab=' ',xlab='POC ug/l',lty=3)
+plot(t2$POC_ugL[1:7],t2$Depth[1:7], ylim=c(150,0), xlim=c(0,200),
+     col=col_months[8],bg= "#00A6FF44",type='b', 
+     pch=22, cex=2,cex.axis=1.7,cex.lab=1.4,ylab=' ',xlab='POC ug/l',lty=3)
 mtext('Depth',side=2,outer=F, at=300, line=3.4)
 par(new=T)
-plot(t2$POC_ugL[8:13],t2$Depth[8:13], fg="chartreuse3",ylim=c(150,0), xlim=c(0,200),col='#0378b7',type='b', 
-     pch=2, cex=2,cex.axis=1.7,cex.lab=1.4,ylab=' ',xlab='POC ug/l',lty=2, 
-     main='Tir, Medar cruise (7 Ago 1991) ')
-legend(100,110,bty='n',cex=1.5,
-       legend=c('41.20 | 13.01', '41.22 | 13.04'),
-       col=c(col_months[8],'#0378b7'), 
-       pch=c(1,2))
-
-plot(t4$POC_ugL,t4$Depth ,fg="chartreuse3", ylim=c(600,0), xlim=c(0,200),col=col_months[8],type='b', 
-     pch=1, cex=2,cex.axis=1.7,cex.lab=1.4,ylab=' ',xlab='POC ug/l',lty=3, main='Tir, Medar cruise (8 Ago 1991) ')
+plot(t2$POC_ugL[8:13],t2$Depth[8:13],ylim=c(150,0), xlim=c(0,200),col='#0378b7',type='b', 
+     pch=23, cex=2,cex.axis=1.7,cex.lab=1.4,ylab=' ',xlab='POC ug/l',lty=2, 
+     main='Tir, Medar cruise (7-10 Ago 1991) ',bg='#0378b744')
+par(new=T)
+plot(t4$POC_ugL,t4$Depth ,ylim=c(150,0), xlim=c(0,200),col='#01486d',bg='#01486d44',type='b', 
+     pch=21, cex=2,cex.axis=1.7,cex.lab=1.4,ylab=' ',xlab='POC ug/l',lty=1, 
+     main=' ')
 mtext('Depth',side=2,outer=F, at=300, line=3.4)
-text(60,400,'41.49 | 12.1', cex=2)
+legend(100,110,bty='n',cex=1.5,
+       legend=c('41.20 | 13.01', '41.22 | 13.04', '41.49 | 12.10'),
+       col=c(col_months[8],'#0378b7','#01486d'),
+       pt.bg = c( "#00A6FF44",'#0378b744','#01486d44'),
+       pch=c(22,23,21))
+

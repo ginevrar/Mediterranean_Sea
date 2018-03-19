@@ -14,6 +14,15 @@ ggplotColours <- function(n = 12, h = c(0, 360) + 15){
 }
 col_months<-ggplotColours(n = 11)
 
+ggplotColours <- function(n = 12, h = c(0, 360) + 15){
+  if ((diff(h) %% 360) < 1) h[2] <- h[2] - 360/n
+  hcl(h = (seq(h[1], h[2], length = n)), c = 100, l = 65)
+}
+col_months<-ggplotColours(n = 11)
+POM_med$C_N_ratio = POM_med$POC/POM_med$PON
+POM_med$C_P_ratio = POM_med$POC/POM_med$POP
+POM_med$N_P_ratio = POM_med$PON/POM_med$POP
+
 POM_med$Zone[POM_med$Longitude<=-0.5] <- "Alb"
 POM_med$Zone[POM_med$Longitude>-0.5 & POM_med$Longitude<=5 & POM_med$Latitude<=39.5]<-'Sww'
 POM_med$Zone[POM_med$Longitude>5 & POM_med$Longitude<=9 & POM_med$Latitude<=39.5]<-'Swe'
@@ -98,7 +107,6 @@ m20<-filter(Nwm_meda, Station ==  2261) #  23 gen 98  43.43      7.25
 m21<-filter(Nwm_meda, Station ==  2262) #  23 gen 98  43.43      7.25 
 m24<-filter(Nwm_meda, Station ==  2200) #  8 ago 91    41.52   12.11   !! SLOPE 28 km dalla costa ----
 
-
 dati_1999<-filter(Nwm_meda, Year==1999)
 dati_1999_open<-dati_1999[(dati_1999$Latitude>42 & dati_1999$Longitude>7),]
 
@@ -148,7 +156,8 @@ plot(Nwm_copin$POC_ugL, Nwm_copin$Depth, xlim=c(0,180), ylim=c(100,0), col=col_m
 text(55,10,'May \n 42.00 | 4.75', cex=1.2)
 ############ --------------------1991
 plot(m24$POC_ugL[1:11], m24$Depth[1:11], ylim=c(500,0),xlim=c(0,80), col=col_months[8],
-     type='b', pch=1, cex=2,cex.axis=1.7,cex.lab=1.4,xlab='POC ug/l',ylab='Depth (m)',lty=2,
+     type='b', pch=1, cex=2,cex.axis=1.7,
+     fg='chartreuse',cex.lab=1.4,xlab='POC ug/l',ylab='Depth (m)',lty=2,
      main='Cruise Medar (1991)') #
 text(18,10,'Ago \n 41.60 | 12.11 ', cex=1.2)
 ####################### ------------------ feb-apr 1999
@@ -195,7 +204,7 @@ legend(11,100,bty='n',legend=c('29 Sep 43.41 | 7.86','30 Sep 43.40 | 7.82',
                        '03 Oct 43.43 | 7.72'), cex=1.2,
        col=c(col_months[9],col_months[9],col_months[10],col_months[10],col_months[10]),
        pch=c(1,2,3,4,5))
-
+dev.off()
 ###-------------------- Medar 2000
 png(file = "NWM_medar2000_profiles4.png",width = 28, height = 28, units = "cm", res = 200)
 par(mfrow=c(2,6),mar=c(2,0.5,2,0), 
