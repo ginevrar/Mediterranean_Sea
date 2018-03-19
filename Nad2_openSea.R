@@ -1,22 +1,21 @@
 setwd('L:/Il mio Drive/MedSea')
-library(ggplot2)
-library(rworldmap);library(ggmap);library(mapproj)
-library(grid);library(gridExtra);library(dplyr)
+library(ggplot2);library(rworldmap);library(ggmap);
+library(mapproj);library(gridExtra);library(dplyr)
+setwd('C:/Users/gi/Dropbox')
 
 POM_med<-read.csv('POM_Med.csv')
-
 summary(POM_med$Zone)
-Nad<-filter(POM_med, Zone ==  'Nad')
+str(POM_med)
+ggplotColours <- function(n = 12, h = c(0, 360) + 15){
+  if ((diff(h) %% 360) < 1) h[2] <- h[2] - 360/n
+  hcl(h = (seq(h[1], h[2], length = n)), c = 100, l = 65)
+}
+col_months<-ggplotColours(n = 11)
 
-Nad_97<-filter(Nad, Year ==  1996)
+Nad<-filter(POM_med, Zone==  'Nad')
 Nad_97<-filter(Nad, Year ==  1997)
 
-Nad_97[1:12,]
-Nad_97[13:24,]
-Nad_97[25:36,]
-Nad_97[37:48,]
-Nad_97[49:59,]
-
+Nad_97_feb<-filter(Nad_97, Month ==  2)
 summary(factor(Nad_97$Station))
 
 Nad_21<-filter(Nad_97, Station ==  2223)
@@ -40,206 +39,419 @@ Nad_38<-filter(Nad_97, Station ==  2242)
 Nad_39<-filter(Nad_97, Station ==  2243)
 Nad_40<-filter(Nad_97, Station ==  2244)
 
+Nad_41<-filter(Nad_97, Station ==  2245)
+Nad_42<-filter(Nad_97, Station ==  2248)
+Nad_43<-filter(Nad_97, Station ==  2249)
+Nad_44<-filter(Nad_97, Station ==  2250)
+Nad_45<-filter(Nad_97, Station ==  2251)
+Nad_46<-filter(Nad_97, Station ==  2252)
+Nad_47<-filter(Nad_97, Station ==  2254)
+Nad_48<-filter(Nad_97, Station ==  2255)
 
+Nad_26_1<-filter(Nad_26, Longitude == 13.09)
+Nad_26_2<-filter(Nad_26, Longitude == 13.16)
+Nad_31_1<-filter(Nad_31, Longitude==13.09)
+Nad_31_2<-filter(Nad_31, Longitude==13.30)
+Nad_31_3<-filter(Nad_31, Longitude==13.16)
 
+Nad_33_1 <-filter(Nad_33,Longitude==13.22)
+Nad_33_2 <-filter(Nad_33,Longitude==13.27)
+
+Nad_34_1 <-filter(Nad_34,Longitude==13.06)
+Nad_34_2 <-filter(Nad_34,Longitude==13.31)
+
+Nad_36_1 <-filter(Nad_36,Longitude==12.58)
+Nad_36_2 <-filter(Nad_36,Longitude==12.65)
 
 Nad_21_1<-filter(Nad_21, Longitude == 13.30)
 Nad_21_2<-filter(Nad_21, Longitude == 13.34)
 Nad_21_3<-filter(Nad_21, Longitude == 13.44)
 
+Nad_22_1<-filter(Nad_22, Latitude == 43.78)
+Nad_22_2<-filter(Nad_22, Latitude ==  43.84)
+Nad_22_3<-filter(Nad_22, Latitude ==  43.89)
 
-Nad_26_1<-filter(Nad_26, Longitude == 12.59)
-Nad_26_2<-filter(Nad_26, Longitude == 12.80)
-Nad_31_1<-filter(Nad_31, Longitude==13.04)
-Nad_31_2<-filter(Nad_31, Longitude==13.13)
-Nad_32_1 <-filter(Nad_32,Longitude==13.18)
-Nad_32_2 <-filter(Nad_32,Longitude==13.28)
+Nad_23_1<-filter(Nad_23, Latitude ==  43.75)
+Nad_23_2<-filter(Nad_23, Latitude ==  43.80)
+Nad_23_3<-filter(Nad_23, Latitude ==  43.86)
 
-Nad_33_1 <-filter(Nad_33,Longitude==13.22)
-Nad_33_2 <-filter(Nad_33,Longitude==13.27)
+Nad_24_1<-filter(Nad_24, Latitude ==  43.78)
+Nad_24_2<-filter(Nad_24, Latitude ==  43.80)
+Nad_24_3<-filter(Nad_24, Latitude ==  43.89)
 
-Nad_34_1 <-filter(Nad_34,Longitude==13.35)
-Nad_34_2 <-filter(Nad_34,Longitude==13.31)
+Nad_28_1<-filter(Nad_28, Latitude ==  44.47)
+Nad_28_2<-filter(Nad_28, Latitude ==  44.49)
+Nad_28_3<-filter(Nad_28, Latitude ==  44.52)
 
-Nad_35_1 <-filter(Nad_35,Longitude==13.44)
-Nad_35_2 <-filter(Nad_35,Longitude==13.53)
+Nad_30_1<-filter(Nad_30, Latitude ==  44.57)
+Nad_30_2<-filter(Nad_30, Latitude ==  44.60)
 
-Nad_36_1 <-filter(Nad_36,Longitude==13.04)
-Nad_36_2 <-filter(Nad_36,Longitude==13.30)
-Nad_36_3 <-filter(Nad_36,Longitude==13.39)
+Nad_42_1<-filter(Nad_42, Longitude==13.08)
+Nad_42_2<-filter(Nad_42, Longitude==13.13)
+Nad_42_3<-filter(Nad_42, Longitude==13.22)
 
-png('POC_NAD_1997.png',width = 29, height = 19, units = "cm", res = 300)
+Nad_45_1<-filter(Nad_45, Longitude==13.18)
+Nad_45_2<-filter(Nad_45, Longitude==13.23)
+Nad_45_3<-filter(Nad_45, Longitude==13.32)
+
+
+max(Nad_21$POC_ugL)
+png('POC_NADfeb_1997.png',width = 29, height = 19, units = "cm", res = 300)
 par(mfrow=c(1,4),mar=c(4.5,1.1,2,0), 
     oma=c(2,4.2,3,2.2))
 par(mfrow=c(1,4))
-plot(Nad_21_1$POC_ugL, Nad_21_1$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b', 
-     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
+plot(Nad_21_1$POC_ugL, Nad_21_1$Depth, xlim=c(0,1250), ylim=c(40,0),
+     col=col_months[2], 
+     bg='#DB8E0044',type='b', 
+     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,
+     ylab='Depth (m)',xlab='POC ug/l',lty=2,
+     main='Medar (1997)')
 par(new=T)
-plot(Nad_21_2$POC_ugL, Nad_21_2$Depth, xlim=c(0,400), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b',  yaxt='n',
-     pch=22, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-par(new=T)
-plot(Nad_21_3$POC_ugL, Nad_21_3$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b',  yaxt='n',
-     pch=22, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-legend(20,50,pch=c(21,22),legend=c('16 Jun 44.64 | 12.59','16 Jun 44.64 | 12.80'),
-       col=col_months[6], bty='n',cex=1.4)
+plot(Nad_21_2$POC_ugL, Nad_21_2$Depth, xlim=c(0,1250),
+     ylim=c(40,0), col=col_months[2], 
+     bg='#DB8E0044',type='b',  yaxt='n',
+     pch=23, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
+     main='Medar (1997)')
+legend(150,20,pch=c(21,23),
+       legend=c('11 Feb 43.75 | 13.30',
+                '11 Feb 43.77 | 13.34'),
+       col=col_months[2], bty='n',cex=1.4)
 
-plot(Nad_22$POC_ugL, Nad_22$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b',  yaxt='n',
-     pch=22, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-legend(20,50,legend=c('17 Jun 44.64 | 12.87','17 Jun 44.64 | 12.59','18 Jun 44.47 | 12.87'),
-       cex=1.4, col=col_months[6], bty='n',pch=c(22,8,21))
+plot(Nad_22_1$POC_ugL, Nad_22_1$Depth, 
+     xlim=c(0,1100),
+     ylim=c(60,0), col=col_months[2], 
+     bg='#DB8E0044',type='b',  yaxt='n',
+     pch=23, cex=2,cex.axis=1.7,cex.lab=1.2,
+     ylab='Depth (m)',xlab='POC ug/l',lty=2,
+     main='Medar (1997)')
 par(new=T)
-plot(Nad_23$POC_ugL, Nad_23$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b',  yaxt='n',
+plot(Nad_22_2$POC_ugL, Nad_22_2$Depth, 
+     xlim=c(0,1100), ylim=c(60,0), col=col_months[2], 
+     bg='#DB8E0044',type='b',  yaxt='n',
      pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
+     main='')
 par(new=T)
-plot(Nad_24$POC_ugL, Nad_24$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b',  yaxt='n',
+plot(Nad_23_1$POC_ugL, Nad_23_1$Depth, xlim=c(0,1100),
+     ylim=c(50,0), col=col_months[2], 
+     bg='#DB8E0044',type='b',  yaxt='n',
      pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
+     main='Medar (1997)')
+legend(20,30,legend=c('11 Feb 43.86 | 13.44',
+                      '12 Feb 43.78 | 13.24',
+                      '13 Feb 43.75 | 13.30'),
+       cex=1.4, col=col_months[2], bty='n',
+       pch=c(23,8,21))
 
-
-plot(Nad_25$POC_ugL, Nad_25$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b',  yaxt='n',
+plot(Nad_21_3$POC_ugL, Nad_21_3$Depth, xlim=c(0,200),
+     ylim=c(50,0), col=col_months[2], 
+     bg='#DB8E0044',type='b',  yaxt='n',
      pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
+     main='Medar (1997)')
 par(new=T)
-plot(Nad_26_1$POC_ugL, Nad_26_1$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b',  yaxt='n',
+plot(Nad_23_2$POC_ugL, Nad_23_2$Depth, xlim=c(0,200),
+     ylim=c(50,0), col=col_months[2], 
+     bg='#DB8E0044',type='b',  yaxt='n',
+     pch=23, cex=2,cex.axis=1.7,cex.lab=1.2,
+     ylab='Depth (m)',xlab='POC ug/l',lty=4,
+     main='Medar (1997)')
+par(new=T)
+plot(Nad_23_3$POC_ugL, Nad_23_3$Depth, xlim=c(0,200),
+     ylim=c(50,0), col=col_months[2], 
+     bg='#DB8E0044',type='b',  yaxt='n',
      pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
+     main='Medar (1997)')
+legend(10,30,legend=c('11 Feb 43.86 | 13.44',
+                      '13 Feb 43.80 | 13.37',
+                      '13 Feb 43.86 | 13.44'),
+       cex=1.4, col=col_months[2], 
+       bty='n',pch=c(21,23,8))
+
+plot(Nad_22_3$POC_ugL, Nad_22_3$Depth, 
+     xlim=c(0,350), ylim=c(50,0), col=col_months[2], 
+     bg='#DB8E0044',type='b',  yaxt='n',
+     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,
+     ylab='Depth (m)',xlab='POC ug/l',lty=5,
+     main='Medar (1997)')
 par(new=T)
-plot(Nad_26_2$POC_ugL, Nad_26_2$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b',  yaxt='n',
-     pch=22, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-
-legend(20,50,legend=c('18 Jun 44.47 | 13.08','19 Jun 44.47 | 12.59','19 Jun 44.47 | 12.80'),
-       cex=1.4, col=col_months[6],bty='n', pch=c(21,8,22))
-
-
-plot(Nad_27$POC_ugL, Nad_27$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b',  yaxt='n',
+plot(Nad_24_3$POC_ugL, Nad_24_3$Depth, 
+     xlim=c(0,350), ylim=c(50,0), 
+     col=col_months[2], yaxt='n',
+     bg='#DB8E0044',type='b',  yaxt='n',
+     pch=22, cex=2,cex.axis=1.7,cex.lab=1.2,
+     ylab='Depth (m)',xlab='POC ug/l',lty=3,
+     main='Medar (1997)')
+par(new=T)
+plot(Nad_24_2$POC_ugL, Nad_24_2$Depth, 
+     xlim=c(0,350), ylim=c(60,0), col=col_months[2], 
+     bg='#DB8E0044',type='b',  yaxt='n',
      pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-text(90,130,'20 Jun ', cex=1.4)
-par(new=T)
-plot(Nad_28$POC_ugL, Nad_28$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b', yaxt='n',
-     pch=22, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-legend(20,50,legend=c('20 Jun 44.55 | 12.87','20 Jun 44.55 | 13.08'),
-       cex=1.4, col=col_months[6],bty='n', pch=c(21,8,22))
+     main='Medar (1997)')
+
+legend(90,20,legend=c('12 Feb 43.89 | 13.39',
+    '14 Feb 43.89 | 13.39','14 Feb 43.80 | 13.29'),
+       cex=1.4, col=col_months[2], 
+    bty='n',pch=c(22,8,21))
+
 dev.off()
 
-png('POC_NAD_1997b.png',width = 29, height = 19, units = "cm", res = 300)
+
+png('POC_NADfeb2_1997.png',width = 29, height = 19, units = "cm", res = 300)
 par(mfrow=c(1,4),mar=c(4.5,1.1,2,0), 
     oma=c(2,4.2,3,2.2))
-plot(Nad_29$POC_ugL, Nad_29$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b', 
-     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-text(90,130,'21 Jun 44.55 | 12.66', cex=1.4)
-par(new=T)
-plot(Nad_30$POC_ugL, Nad_30$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b', yaxt='n',
-     pch=22, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-text(90,130,'21 Jun 44.55 | 13.37', cex=1.4)
-
-legend(20,50,legend=c('21 Jun 44.55 | 12.66','21 Jun 44.55 | 13.37'),
-       cex=1.4, col=col_months[6],bty='n', pch=c(21,22))
-
-plot(Nad_31_1$POC_ugL, Nad_31_1$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b', yaxt='n',
+par(mfrow=c(1,4))
+plot(Nad_25$POC_ugL, Nad_25$Depth, 
+     xlim=c(0,600), ylim=c(60,0), col=col_months[2], 
+     bg='#DB8E0044',type='b',  yaxt='n',
      pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
+     main='Medar (1997)')
 par(new=T)
-plot(Nad_31_2$POC_ugL, Nad_31_2$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b', yaxt='n',
+plot(Nad_27$POC_ugL, Nad_27$Depth, xlim=c(0,600), ylim=c(60,0), col=col_months[2], 
+     bg='#DB8E0044',type='b',  yaxt='n',
      pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-legend(20,50,legend=c('27 Jun 43.90 | 13.04','27 Jun 43.98 | 13.13'),
-       cex=1.4, col=col_months[6],bty='n', pch=c(8,21))
-
-
-plot(Nad_32_1$POC_ugL, Nad_32_1$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b', yaxt='n',
-     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
+     main='')
 par(new=T)
-plot(Nad_32_2$POC_ugL, Nad_32_2$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b', yaxt='n',
-     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-legend(20,50,legend=c('28 Jun 44.02 | 13.18','28 Jun 44.09 | 13.28'),
-       cex=1.4, col=col_months[6],bty='n', pch=c(21,8))
-
-plot(Nad_33_1$POC_ugL, Nad_33_1$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b', yaxt='n',
-     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-par(new=T)
-plot(Nad_33_2$POC_ugL, Nad_33_2$Depth, xlim=c(0,250), ylim=c(60,0), col=col_months[6], 
-     bg='#00C1A744',type='b', yaxt='n',
-     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-legend(20,50,legend=c('29 Jun 43.93 | 13.22','28 Jun 43.96 | 13.27'),
-       cex=1.4, col=col_months[6],bty='n', pch=c(21,8))
-dev.off()
-
-
-png('POC_NAD_1997c.png',width = 29, height = 19, units = "cm", res = 300)
-par(mfrow=c(1,3),mar=c(4.5,1.1,2,0), 
-    oma=c(2,4.2,3,2.2))
-
-plot(Nad_34_1$POC_ugL, Nad_34_1$Depth, xlim=c(0,200), ylim=c(65,0), col=col_months[6], 
-     bg='#00C1A744',type='b', yaxt='n',
-     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-par(new=T)
-plot(Nad_34_2$POC_ugL, Nad_34_2$Depth, xlim=c(0,200), ylim=c(65,0), col=col_months[6], 
-     bg='#00C1A744',type='b', yaxt='n',
-     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-legend(20,50,legend=c('30 Jun 43.91 | 13.35','30 Jun 43.87 | 13.31'),
-       cex=1.4, col=col_months[6],bty='n', pch=c(21,8))
-
-plot(Nad_35_1$POC_ugL, Nad_35_1$Depth, xlim=c(0,200), ylim=c(65,0), col=col_months[6], 
-     bg='#00BADE44',type='b', yaxt='n',
-     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-par(new=T)
-plot(Nad_35_2$POC_ugL, Nad_35_2$Depth, xlim=c(0,200), ylim=c(65,0), col=col_months[7], 
-     bg='#00BADE44',type='b', yaxt='n',
-     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-legend(20,50,legend=c('1 Jul 43.85 | 13.44','1 Jul 43.93 | 13.53'),
-       cex=1.4, col=col_months[6],bty='n', pch=c(21,8))
-
-plot(Nad_36_1$POC_ugL, Nad_36_1$Depth, xlim=c(0,200), ylim=c(65,0), col=col_months[7], 
-     bg='#00BADE44',type='b', yaxt='n',
-     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-par(new=T)
-plot(Nad_36_2$POC_ugL, Nad_36_2$Depth, xlim=c(0,200), ylim=c(65,0), col=col_months[7], 
-     bg='#00BADE44',type='b', yaxt='n',
-     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-par(new=T)
-plot(Nad_36_3$POC_ugL, Nad_36_3$Depth, xlim=c(0,200), ylim=c(65,0), col=col_months[7], 
-     bg='#00BADE44',type='b', yaxt='n',
+plot(Nad_30_2$POC_ugL, Nad_30_2$Depth, xlim=c(0,600), ylim=c(60,0), col=col_months[2], 
+     bg='#DB8E0044',type='b', yaxt='n',
      pch=23, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
-     main='Medar (1996)')
-legend(20,50,legend=c('2 Jul 43.90 | 13.04','2 Jul 43.74 | 13.30','2 Jul 43.81 | 13.39'),
-       cex=1.4, col=col_months[7],bty='n', pch=c(21,8))
+     main='Medar (1997)')
+legend(90,20,legend=c(
+                      '15 Feb 43.75 | 13.30',
+                      '24 Feb 44.65 | 12.97',
+                      '26 Feb 44.60 | 12.85'),
+       cex=1.4, col=col_months[2], 
+       bty='n',pch=c(8,21,23))
+# 2II
+
+plot(Nad_24_1$POC_ugL, Nad_24_1$Depth, 
+     xlim=c(0,520), ylim=c(60,0), col=col_months[2], 
+     bg='#DB8E0044',type='b',  yaxt='n',
+     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
+     main='Medar (1997)')
+par(new=T) 
+plot(Nad_29$POC_ugL, Nad_29$Depth, xlim=c(0,520), ylim=c(60,0), col=col_months[2], 
+     bg='#DB8E0044',type='b',  yaxt='n',
+     pch=22, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
+     main='Medar (1997)')
+par(new=T)
+plot(Nad_31_1$POC_ugL, Nad_31_1$Depth, xlim=c(0,520), ylim=c(60,0), col=col_months[2], 
+     bg='#DB8E0044',type='b', yaxt='n',
+     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+plot(Nad_31_2$POC_ugL, Nad_31_2$Depth, xlim=c(0,520), ylim=c(60,0),
+     col=col_months[2], 
+     bg='#DB8E0044',type='b', yaxt='n',
+     pch=24, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
+     main='')
+legend(90,20,legend=c('14 Feb 43.78 | 13.24 ',
+                      '26 Feb 44.51 | 13.05 ','27 Feb 44.59 | 13.19','27 Feb 44.48 | 13.30'), 
+       cex=1.4, col=col_months[2],bty='n',pch=c(21, 22,8,24))   
+
+
+plot(Nad_26_1$POC_ugL, Nad_26_1$Depth, xlim=c(0,300), ylim=c(60,0), col=col_months[2], 
+     bg='#00C1A744',type='b',  yaxt='n',
+     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
+     main=' ')
+par(new=T)
+plot(Nad_26_2$POC_ugL, Nad_26_2$Depth, xlim=c(0,300), ylim=c(60,0), 
+     col=col_months[2],bg='#DB8E0044',type='b',  yaxt='n',
+     pch=22, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
+     main='Medar (1997)')
+par(new=T) #350
+plot(Nad_28_1$POC_ugL, Nad_28_1$Depth, xlim=c(0,300), ylim=c(60,0),
+     col=col_months[2], bg='#DB8E0044',type='b', yaxt='n',
+     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
+     main='')
+par(new=T)
+plot(Nad_30_1$POC_ugL, Nad_30_1$Depth, xlim=c(0,300), ylim=c(60,0), col=col_months[2], 
+     bg='#DB8E0044',type='b', yaxt='n',
+     pch=22, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
+     main='Medar (1997)')
+legend(40,40,legend=c('24 Feb 44.59 | 13.09 ',
+                      '24 Feb 44.55 | 13.16','25 Feb 44.47 | 13.12',
+                      '26 Feb 44.57 | 12.92'), 
+       cex=1.4, col=col_months[2], 
+       bty='n',pch=c(8,22,21))   #ok
+
+
+plot(Nad_32$POC_ugL, Nad_32$Depth, xlim=c(0,300), ylim=c(60,0), col=col_months[2], 
+     bg='#DB8E0044',type='b', yaxt='n',
+     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
+     main='Medar (1997)')
+par(new=T)
+plot(Nad_33$POC_ugL, Nad_33$Depth, xlim=c(0,300), ylim=c(60,0), col=col_months[2], 
+     bg='#DB8E0044',type='b', yaxt='n',
+     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
+     main=' ')
+legend(20,40,legend=c('28 Feb 44.57 | 12.92 ','28 Feb 44.62 | 13.03'),
+                      cex=1.4, col=col_months[2],bty='n',pch=c(21, 8))   
 dev.off()
 
+Nad_36_1<-filter(Nad_36, Longitude==12.58)
+Nad_36_2<-filter(Nad_36, Longitude==12.65)
+
+Nad_37_1<-filter(Nad_37, Longitude==12.73)
+Nad_37_2<-filter(Nad_37, Longitude==12.80)
+
+Nad_41_1<-filter(Nad_41,Longitude==12.58)
+Nad_41_2<-filter(Nad_41,Longitude==12.65)
+
+dev.new()
+par(mfrow=c(1,4),mar=c(4.5,1.1,2,0), oma=c(2,4.2,3,2.2))
+plot(Nad_34_1$POC_ugL, Nad_34_1$Depth, xlim=c(0,200), ylim=c(60,0), 
+     col=col_months[3], 
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
+     main='Medar (1997)')
+par(new=T)
+plot(Nad_34_2$POC_ugL, Nad_34_2$Depth, xlim=c(0,200), ylim=c(60,0), col=col_months[3], 
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=23, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,
+     main=' ')
+par(new=T)
+plot(Nad_35$POC_ugL, Nad_35$Depth, xlim=c(0,200), ylim=c(60,0), col=col_months[3], 
+     type='b', yaxt='n',
+     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+
+legend(20,40,legend=c('01 Mar 44.50 | 13.06 ','01 Mar 44.44 | 13.18',
+                      '01 Mar 44.54 | 12.99'),
+       cex=1.4, col=col_months[2],bty='n',pch=c(21,23, 8))   
+#2
+plot(Nad_36_1$POC_ugL, Nad_36_1$Depth, xlim=c(0,200), ylim=c(60,0),
+     col=col_months[6], 
+     bg='#00C1A744',type='b', yaxt='n',
+     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+plot(Nad_37_1$POC_ugL, Nad_37_1$Depth, xlim=c(0,200), ylim=c(60,0), 
+     col=col_months[6], 
+     bg='#00C1A744',type='b', yaxt='n',
+     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2,main='Medar (1997)')
+legend(20,40,legend=c('13 Jun 44.73 | 12.58 ',
+                      '14 Jun 44.63 | 12.73'),
+       cex=1.4, col=col_months[2],bty='n',pch=c(21, 8))   
+
+plot(Nad_36_2$POC_ugL, Nad_36_2$Depth, xlim=c(0,200), ylim=c(60,0),
+     col=col_months[3], 
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+plot(Nad_37_2$POC_ugL, Nad_37_2$Depth, xlim=c(0,200), ylim=c(60,0), col=col_months[3], 
+     bg='#00C1A744',type='b', yaxt='n',
+     pch=24, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+plot(Nad_38$POC_ugL, Nad_38$Depth, xlim=c(0,200), ylim=c(60,0),
+     col=col_months[3], 
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+legend(20,40,legend=c('13 Jun 44.73 | 12.65', '14 Jun 44.73 | 12.80 ','15 Jun 44.63 | 12.65'),
+       cex=1.4, col=col_months[2],bty='n',pch=c(21,24, 8))   
+dev.new()
+plot(Nad_39$POC_ugL, Nad_39$Depth, xlim=c(0,1000), ylim=c(60,0),
+     col=col_months[3], 
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=23, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+plot(Nad_41_1$POC_ugL, Nad_41_1$Depth, xlim=c(0,1000), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+plot(Nad_41_2$POC_ugL, Nad_41_2$Depth, xlim=c(0,1000), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+
+plot(Nad_40$POC_ugL, Nad_40$Depth, xlim=c(0,400), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+plot(Nad_42_1$POC_ugL, Nad_42_1$Depth, xlim=c(0,400), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=22, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+plot(Nad_42_2$POC_ugL, Nad_42_2$Depth, xlim=c(0,400), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=23, cex=1.8,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+plot(Nad_42_3$POC_ugL, Nad_42_3$Depth, xlim=c(0,400), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+
+
+plot(Nad_43$POC_ugL, Nad_43$Depth, xlim=c(0,100), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+plot(Nad_44$POC_ugL, Nad_44$Depth, xlim=c(0,100), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+
+
+plot(Nad_45_1$POC_ugL, Nad_45_1$Depth, xlim=c(0,250), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+plot(Nad_45_2$POC_ugL, Nad_45_2$Depth, xlim=c(0,250), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=23, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+plot(Nad_45_3$POC_ugL, Nad_45_3$Depth, xlim=c(0,250), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+
+Nad_46_1<-filter(Nad_46, Longitude==13.08)
+Nad_46_2<-filter(Nad_46, Longitude==13.12)
+Nad_46_3<-filter(Nad_46, Longitude==13.22)
+
+Nad_48_1<-filter(Nad_48, Longitude==13.18)
+Nad_48_2<-filter(Nad_48, Longitude==13.22)
+Nad_48_3<-filter(Nad_48, Longitude==13.27)
+
+
+dev.new()
+plot(Nad_46_1$POC_ugL, Nad_46_1$Depth, xlim=c(0,100), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+plot(Nad_46_3$POC_ugL, Nad_46_3$Depth, xlim=c(0,100), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+plot(Nad_46_3$POC_ugL, Nad_46_3$Depth, xlim=c(0,100), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=8, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+
+plot(Nad_47$POC_ugL, Nad_47$Depth, xlim=c(0,100), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=21, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+par(new=T)
+
+dev.new()
+
+plot(Nad_48_1$POC_ugL, Nad_48_1$Depth, xlim=c(0,200), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=23, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+
+plot(Nad_48_2$POC_ugL, Nad_48_2$Depth, xlim=c(0,250), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=23, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
+
+plot(Nad_48_3$POC_ugL, Nad_48_3$Depth, xlim=c(0,250), ylim=c(60,0),
+     col=col_months[3],  #270
+     bg='#AEA20044',type='b', yaxt='n',
+     pch=23, cex=2,cex.axis=1.7,cex.lab=1.2,ylab='Depth (m)',xlab='POC ug/l',lty=2)
