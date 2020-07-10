@@ -21,6 +21,10 @@ oct<-filter(POM_med, Month==10);nov<-filter(POM_med, Month==11);dec<-filter(POM_
 mappa <- get_map(location = c(-7,30, 37,46),maptype =c('watercolor'))
 mappa__ <- get_map(location = c(-6,33,28,45), maptype =c('toner'))
 
+mappa2 <- get_map(location = c(-7,30, 37,46),maptype =c('terrain-background'))
+mappa2 <- get_stamenmap(bbox = c(-7,37,30,46),maptype =c('terrain-background'))
+
+ggmap(mappa2)
 #ggmap(mappa)+ 
  # geom_point(aes(x = Longitude, y = Latitude, 
  #                fill=Month,size=Depth), 
